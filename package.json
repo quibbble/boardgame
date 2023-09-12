@@ -1,8 +1,13 @@
 {
-  "name": "boardgame",
+  "name": "@quibbble/boardgame",
+  "private": false,
   "version": "1.0.0",
   "description": "Quibbble boardgame react component library.",
-  "main": "index.js",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build",
     "dev": "vite",
@@ -20,5 +25,8 @@
   },
   "peerDependencies": {
     "react": "^18.2.0"
+  },
+  "publishConfig": {
+    "@quibbble:boardgame": "https://npm.pkg.github.com"
   }
 }
