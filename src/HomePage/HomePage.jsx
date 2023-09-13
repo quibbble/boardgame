@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Adjectives, Nouns, NumToText } from "../util/words";
 import { CreateGame, Health } from "../api/API";
-import { useNavigate } from "react-router-dom"
 import { IoMdInformationCircleOutline } from "react-icons/io"
 import { Footer } from "../components/Footer"
 
-export function HomePage({ config }) {
-    const navigate = useNavigate();
+export function HomePage({ config, navigate }) {
 
     const [gameID, setGameID] = useState(`${ Adjectives[Math.floor(Math.random()*Adjectives.length)] }-${ Nouns[Math.floor(Math.random()*Nouns.length)] }`);
     const [teams, setTeams] = useState(config.minTeams);

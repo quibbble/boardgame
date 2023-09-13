@@ -1,11 +1,8 @@
 import React from "react";
 import { Footer } from "../components/Footer"
 import { Health } from "../api/API";
-import { useNavigate } from "react-router-dom"
 
-export function DownPage({ config }) {
-
-    const navigate = useNavigate();
+export function DownPage({ config, navigate }) {
 
     setInterval(function () {
         async function fetchHealth() {

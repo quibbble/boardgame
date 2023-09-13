@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ConnStatus } from "../components/ConnStatus";
 import { GetSnapshot } from "../api/API";
 
 export function GamePage({ 
       config, 
+      navigate,
       ref, ws, 
       game, setGame, 
       network, setNetwork, 
@@ -15,7 +15,6 @@ export function GamePage({
       error, setError, 
       children 
    }) {
-   const navigate = useNavigate();
    const { gameID } = useParams();
 
    // websocket connectivity logic 
