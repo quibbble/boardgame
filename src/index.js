@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, createRef } from "react";
 import ReactDOM from "react-dom";
 import { Route, BrowserRouter, Routes, useNavigate } from "react-router-dom";
 import '../src/tailwind.css'
@@ -27,10 +27,8 @@ const config = {
 }
 
 function App() {
-  const ref = useRef();
+  const ref = createRef();
   const ws = useRef();
-
-  const navigate = useNavigate();
 
   const [game, setGame] = useState();
   const [network, setNetwork] = useState();
@@ -39,10 +37,11 @@ function App() {
   const [error, setError] = useState();
 
   return (
+    <BrowserRouter>
       <Routes>
         <Route exact path="/:gameID" element=
           { 
-            <GamePage config={ config } navigate={ navigate }
+            <GamePage config={ config }
               ref={ ref } ws={ ws }
               game={ game } setGame={ setGame }
               network={ network } setNetwork={ setNetwork }
@@ -53,10 +52,11 @@ function App() {
             </GamePage>
           }
         />
-        <Route exact path="/status/down" element={ <DownPage config={ config } navigate={ navigate } /> }/>
-        <Route path="/" element={ <HomePage config={ config } navigate={ navigate } /> } />
+        <Route exact path="/status/down" element={ <DownPage config={ config } /> }/>
+        <Route path="/" element={ <HomePage config={ config } /> } />
       </Routes>
+    </BrowserRouter>
   );
 }
 
-ReactDOM.render(<BrowserRouter><App/></BrowserRouter>, document.getElementById("root"));
+ReactDOM.render(<App/>, document.getElementById("root"));

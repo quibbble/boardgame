@@ -10,10 +10,11 @@ export default defineConfig ({
       fileName: "index",
     },
     rollupOptions: {
-      external: ["react"],
+      external: ["react", "react-dom", "react-router", "react-router-dom"],
       output: {
         globals: {
-          react: 'React'
+          react: "React",
+          "react-router-dom": "reactRouterDom"
         }
       }
     },
