@@ -1,8 +1,8 @@
 {
   "name": "@quibbble/boardgame",
   "private": false,
-  "version": "0.0.1",
-  "description": "Quibbble boardgame react component library.",
+  "version": "0.1.0",
+  "description": "React component library for Quibbble boardgames.",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
   "files": [
