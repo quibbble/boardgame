@@ -132,7 +132,7 @@ export const GamePage = forwardRef((props, ref) => {
                               <div key={ el } 
                                     className={ `text-xs flex items-center justify-center font-bold cursor-pointer mr-1 w-6 h-6 rounded-full border-4 border-${ el }-500 ${ network && connected && connected[network.Name] === el  ? `bg-${ connected[network.Name] }-500` : "" }` } 
                                     onClick={ () => setTeam(el) }>
-                                       { game && ["LongestPath", "MostCrossings"].includes(game.MoreData.Variant) ? game.MoreData.Points[el] : "" }
+                                       { game && game.MoreData && game.MoreData.Points ? game.MoreData.Points[el] : "" }
                               </div>) : null 
                      }
                   </div>
@@ -148,8 +148,8 @@ export const GamePage = forwardRef((props, ref) => {
                   </div>
                </div>
             
-               {/* Individual game logic goes here */}
                <div className="h-full flex flex-col justify-center items-center grow">
+                  {/* unique game components go here */}
                   { children }
                </div>
 
