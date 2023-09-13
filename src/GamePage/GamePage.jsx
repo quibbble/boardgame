@@ -7,7 +7,7 @@ import { GetSnapshot } from "../api/API";
 
 export function GamePage({ 
       config, 
-      ref, 
+      ref, ws, 
       game, setGame, 
       network, setNetwork, 
       chat, setChat, 
@@ -19,12 +19,11 @@ export function GamePage({
    const { gameID } = useParams();
 
    // websocket connectivity logic 
-   const ws = useRef();
    const [isConn, setIsConn] = useState(true);
 
    useEffect(() => {
       if (connected && network && connected[network.Name]) {
-            localStorage.setItem(gameID, connected[network.Name]);
+         sessionStorage.setItem(gameID, connected[network.Name]);
       }
    }, [network, connected, gameID])
 
@@ -48,7 +47,7 @@ export function GamePage({
             ws.current = new WebSocket(`${ config.websocket }/game/join?GameKey=${ config.key }&GameID=${ gameID }`);
             ws.current.onopen = () => {
                setIsConn(true)
-               let team = localStorage.getItem(gameID)
+               let team = sessionStorage.getItem(gameID)
                if (team) setTeam(team)
             };
             ws.current.onclose = () => {

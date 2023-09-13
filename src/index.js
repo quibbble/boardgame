@@ -2,9 +2,9 @@ import React, { useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import '../src/tailwind.css'
-import DownPage from "./DownPage/DownPage";
-import GamePage from "./GamePage/GamePage";
-import HomePage from "./HomePage/HomePage";
+import { DownPage } from "./DownPage/DownPage";
+import { GamePage } from "./GamePage/GamePage";
+import { HomePage } from "./HomePage/HomePage";
 
 const config = {
   // server attributes
@@ -27,7 +27,8 @@ const config = {
 }
 
 function App() {
-  const ref = useRef(null);
+  const ref = useRef();
+  const ws = useRef();
 
   const [game, setGame] = useState();
   const [network, setNetwork] = useState();
@@ -40,7 +41,7 @@ function App() {
       <Routes>
         <Route exact path="/:gameID" element=
           { 
-            <GamePage config={ config } ref={ ref }
+            <GamePage config={ config } ref={ ref } ws={ ws }
               game={ game } setGame={ setGame }
               network={ network } setNetwork={ setNetwork }
               chat={ chat } setChat={ setChat }
