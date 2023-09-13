@@ -99,7 +99,7 @@ export const GamePage = forwardRef((props, ref) => {
 
    return (
       <div className="min-h-screen flex flex-col items-center p-2 md:p-4">
-         <div ref={ref} className="h-full w-full flex flex-col items-center max-w-xl grow">
+         <div ref={ref} className={`h-full w-full ${ config.gamePageMaxWidth } flex flex-col items-center grow`}>
                <div className="flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm">
                   <div>
                      Share this link:&nbsp;

@@ -10,6 +10,7 @@ module.exports = {
   safelist: [
     "font-['coquette']",
     "text-red-600",
+    "max-w-xl",
     {
       pattern: /bg-(red|green|blue|yellow|orange|pink|purple|teal)-500/,
     },

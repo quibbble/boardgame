@@ -23,7 +23,10 @@ const config = {
 
   // styling attributes
   font: "coquette",
-  color: "red-600"
+  color: "red-600",
+
+  // misc attributes
+  gamePageMaxWidth: "max-w-xl"
 }
 
 function App() {
