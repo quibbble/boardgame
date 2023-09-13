@@ -24,3 +24,9 @@ This runs the example [index.js](./src/index.js) and allows for testing:
 ```
 npm run dev
 ```
+
+## Build Dist
+
+```
+npm run build
+```
