@@ -25,8 +25,13 @@ This runs the example [index.js](./src/index.js) and allows for testing:
 npm run dev
 ```
 
-## Build Dist
+## Create New Release
 
-```
-npm run build
-```
+- Make desired changes.
+- Bump [package.json](package.json) `version` field.
+- Run `npm i` to update packages.
+- Run `npm run build` to build `/dist`.
+- Commit changes to `main` branch.
+- Create a new release via Github UI.
+- Github Actions build will build and publish a new version.
+- Latest package published to [quibbble/boardgame](https://github.com/quibbble/boardgame/pkgs/npm/boardgame).

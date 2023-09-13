@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Adjectives, Nouns, NumToText } from "../util/words";
+import { Adjectives, Nouns, NumToText } from "../../util/words";
 import { useNavigate } from "react-router-dom";
-import { CreateGame, Health } from "../api/API";
+import { CreateGame, Health } from "../../api/API";
 import { IoMdInformationCircleOutline } from "react-icons/io"
-import { Footer } from "../components/Footer"
+import { Footer } from "../Footer"
 
 export function HomePage({ config }) {
 

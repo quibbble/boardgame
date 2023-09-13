@@ -1,8 +1,8 @@
 import React, { useEffect, forwardRef, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router-dom";
-import { ConnStatus } from "../components/ConnStatus";
-import { GetSnapshot } from "../api/API";
+import { ConnStatus } from "./ConnStatus";
+import { GetSnapshot } from "../../api/API";
 
 export const GamePage = forwardRef((props, ref) => {
    const {config, ws, 
@@ -99,13 +99,7 @@ export const GamePage = forwardRef((props, ref) => {
 
    return (
       <div className="min-h-screen flex flex-col items-center p-2 md:p-4">
-         <div ref={ref} className="h-full w-full flex flex-col items-center max-w-full max-w-xl grow">
-               {/* TAILWIND HACK - Tailwind preloads only used classes so anything not in initial render will not work */}
-               <div className="text-red-500 text-blue-500 text-green-500 text-yellow-500 text-orange-500 text-pink-500 text-purple-500 text-teal-500"/>
-               <div className="border-red-500 border-blue-500 border-green-500 border-yellow-500 border-orange-500 border-pink-500 border-purple-500 border-teal-500"/>
-               <div className="bg-red-500 bg-blue-500 bg-green-500 bg-yellow-500 bg-orange-500 bg-pink-500 bg-pink-500 bg-purple-500 bg-teal-500"/>
-               <div className="fill-red-500 fill-blue-500 fill-green-500 fill-yellow-500 fill-orange-500 fill-pink-500 fill-pink-500 fill-purple-500 fill-teal-500"/>
-               {/* END HACK */}
+         <div ref={ref} className="h-full w-full flex flex-col items-center max-w-xl grow">
                <div className="flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm">
                   <div>
                      Share this link:&nbsp;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Footer } from "../components/Footer"
-import { Health } from "../api/API";
+import { Footer } from "../Footer"
+import { Health } from "../../api/API";
 
 export function DownPage({ config }) {
 

@@ -1,10 +1,10 @@
 import React, { useState, useRef, createRef } from "react";
 import ReactDOM from "react-dom";
-import { Route, BrowserRouter, Routes, useNavigate } from "react-router-dom";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import '../src/tailwind.css'
-import { DownPage } from "./DownPage/DownPage";
-import { GamePage } from "./GamePage/GamePage";
-import { HomePage } from "./HomePage/HomePage";
+import { DownPage } from "./components/DownPage/DownPage";
+import { GamePage } from "./components/GamePage/GamePage";
+import { HomePage } from "./components/HomePage/HomePage";
 
 const config = {
   // server attributes

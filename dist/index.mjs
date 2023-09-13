@@ -1727,7 +1727,7 @@ const jn = it((e, t) => {
   const [I, ye] = v(0);
   return _(() => {
     I > 0 && setTimeout(() => ye(I - 1), 1e3);
-  }, [I]), /* @__PURE__ */ l.createElement("div", { className: "min-h-screen flex flex-col items-center p-2 md:p-4" }, /* @__PURE__ */ l.createElement("div", { ref: t, className: "h-full w-full flex flex-col items-center max-w-full max-w-xl grow" }, /* @__PURE__ */ l.createElement("div", { className: "text-red-500 text-blue-500 text-green-500 text-yellow-500 text-orange-500 text-pink-500 text-purple-500 text-teal-500" }), /* @__PURE__ */ l.createElement("div", { className: "border-red-500 border-blue-500 border-green-500 border-yellow-500 border-orange-500 border-pink-500 border-purple-500 border-teal-500" }), /* @__PURE__ */ l.createElement("div", { className: "bg-red-500 bg-blue-500 bg-green-500 bg-yellow-500 bg-orange-500 bg-pink-500 bg-pink-500 bg-purple-500 bg-teal-500" }), /* @__PURE__ */ l.createElement("div", { className: "fill-red-500 fill-blue-500 fill-green-500 fill-yellow-500 fill-orange-500 fill-pink-500 fill-pink-500 fill-purple-500 fill-teal-500" }), /* @__PURE__ */ l.createElement("div", { className: "flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm" }, /* @__PURE__ */ l.createElement("div", null, "Share this link: ", /* @__PURE__ */ l.createElement("span", { className: "underline cursor-pointer", onClick: () => {
+  }, [I]), /* @__PURE__ */ l.createElement("div", { className: "min-h-screen flex flex-col items-center p-2 md:p-4" }, /* @__PURE__ */ l.createElement("div", { ref: t, className: "h-full w-full flex flex-col items-center max-w-xl grow" }, /* @__PURE__ */ l.createElement("div", { className: "flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm" }, /* @__PURE__ */ l.createElement("div", null, "Share this link: ", /* @__PURE__ */ l.createElement("span", { className: "underline cursor-pointer", onClick: () => {
     ye(1), navigator.clipboard.writeText(`${window.location.protocol}//${window.location.host}/${h}`);
   } }, `${window.location.protocol}//${window.location.host}/${h}`), I > 0 ? /* @__PURE__ */ l.createElement("div", { className: "absolute mt-2 w-full flex justify-center" }, /* @__PURE__ */ l.createElement("div", { className: "absolute top-[-12px] w-6 overflow-hidden inline-block" }, /* @__PURE__ */ l.createElement("div", { className: " h-4 w-4 bg-zinc-600 rotate-45 transform origin-bottom-left" })), /* @__PURE__ */ l.createElement("div", { className: "font-bold text-xs text-center bg-zinc-600 px-2 py-1" }, "copied!")) : null), /* @__PURE__ */ l.createElement("div", { className: "px-1" }, /* @__PURE__ */ l.createElement(vn, { isConn: N }))), /* @__PURE__ */ l.createElement("hr", { className: "w-full mb-2" }), /* @__PURE__ */ l.createElement("div", { className: "flex w-full justify-between items-center mb-4" }, /* @__PURE__ */ l.createElement("div", { className: "flex" }, s ? s.Teams.map((x) => /* @__PURE__ */ l.createElement(
     "div",
@@ -1741,6 +1741,7 @@ const jn = it((e, t) => {
 });
 export {
   Fn as DownPage,
+  De as Footer,
   jn as GamePage,
   _n as HomePage
 };
