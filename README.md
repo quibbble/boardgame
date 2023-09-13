@@ -1,4 +1,4 @@
-# boardgame
+# Boardgame
 
 This is a React component library for Quibbble boardgames. See [index.js](./src/index.js) for an example of how to use the provided components. 
 
@@ -33,5 +33,5 @@ npm run dev
 - Run `npm run build` to build `/dist`.
 - Commit changes to `main` branch.
 - Create a new release via Github UI.
-- Github Actions build will build and publish a new version.
+- Github Actions will build and publish a new version.
 - Latest package published to [quibbble/boardgame](https://github.com/quibbble/boardgame/pkgs/npm/boardgame).
