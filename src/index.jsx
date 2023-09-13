@@ -1,3 +1,5 @@
 import './tailwind.css'
 
-export * from "./Footer";
+export { DownPage } from "./DownPage";
+export { HomePage } from "./HomePage";
+export { GamePage } from "./GamePage";

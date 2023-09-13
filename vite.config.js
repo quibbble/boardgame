@@ -11,9 +11,11 @@ export default defineConfig ({
     },
     rollupOptions: {
       external: ["react"],
+      output: {
+        globals: {
+          react: 'React'
+        }
+      }
     },
-  },
-  server: {
-    open: './dev/index.html',
   },
 });
