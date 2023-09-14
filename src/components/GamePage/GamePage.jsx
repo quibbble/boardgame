@@ -148,7 +148,7 @@ export const GamePage = forwardRef((props, ref) => {
                   </div>
                </div>
             
-               <div className="h-full flex flex-col justify-center items-center grow">
+               <div className="h-full w-full flex flex-col justify-center items-center grow">
                   {/* unique game components go here */}
                   { children }
                </div>
