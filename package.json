@@ -1,7 +1,7 @@
 {
   "name": "@quibbble/boardgame",
   "private": false,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "React component library for Quibbble boardgames.",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
@@ -20,8 +20,8 @@
     "autoprefixer": "^10.4.15",
     "axios": "^1.5.0",
     "postcss": "^8.4.29",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router": "^6.16.0",
     "react-router-dom": "^6.16.0",
@@ -30,8 +30,8 @@
     "vite": "^4.4.9"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router": "^6.16.0",
     "react-router-dom": "^6.16.0"
   },

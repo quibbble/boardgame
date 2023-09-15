@@ -1,6 +1,6 @@
 # Boardgame
 
-This is a React component library for Quibbble boardgames. See [index.js](./src/index.js) for an example of how to use the provided components. 
+This is a React component library for Quibbble games. See [index.js](./src/index.js) for an example of how to use the provided components. 
 
 ## Install Package
 
