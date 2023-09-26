@@ -1,5 +1,6 @@
 import React, { useEffect, forwardRef, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import { IoMdRefresh } from "react-icons/io";
 import { useParams, useNavigate } from "react-router-dom";
 import { ConnStatus } from "./ConnStatus";
 import { GetSnapshot } from "../../api/API";
@@ -98,7 +99,7 @@ export const GamePage = forwardRef((props, ref) => {
    }, [copied]);
 
    return (
-      <div className="min-h-screen flex flex-col items-center p-2 md:p-4">
+      <div className="min-h-screen flex flex-col items-center p-2 md:p-4 fade-in">
          <div ref={ref} className={`h-full w-full ${ config.gamePageMaxWidth } flex flex-col items-center grow`}>
                <div className="flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm">
                   <div>
@@ -156,17 +157,27 @@ export const GamePage = forwardRef((props, ref) => {
                <hr className="w-full mb-2"/>
                <div className="w-full flex justify-between items-center">
                   <div className={`leading-4 text-2xl font-black text-${ config.color } cursor-pointer`}>
-                     <a href={ `${ window.location.protocol }//${ window.location.host }` }>
+                     <button onClick={ () => {
+                        sessionStorage.setItem("gameID", "")
+                        navigate("/")
+                     }}>
                         <span className={`font-['${ config.font }']`}>{ config.key }</span>
                         <span className="ml-1 text-[0.5rem] md:text-xs text-zinc-100">{ game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : "" }</span>
-                     </a>
+                     </button>
                   </div>
                   <div className="flex">
-                     <div className="flex">
-                        <div className={`px-3 py-1 font-bold cursor-pointer flex items-center justify-center text-xs bg-zinc-600 mr-2 ${ game && game.Winners.length > 0 ? "animate-pulse" : ""}`} onClick={ () => resetGame() }>new game</div>
-                     </div>
-                     <div className="italic text-xs bg-blue-500 py-1 px-2">
-                        <a href="https://quibbble.com">more <span className="font-['lobster'] text-sm not-italic">quibbble</span> games</a>
+                     
+                     <button onClick={() => resetGame()} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-green-500 animate-pulse" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
+                        <IoMdRefresh />
+                     </button>
+                     <button onClick={() => {
+                        sessionStorage.setItem("gameID", gameID);
+                        navigate("/rules")
+                     }} title="how to play" className="p-2 bg-blue-500 mr-3 md:mr-2 italic text-xs font-bold">
+                        game rules
+                     </button>
+                     <div className="italic text-xs  py-1 px-2 border-blue-500 border border-dashed text-blue-500">
+                        <a href="https://quibbble.com" target="_blank">more <span className="text-zinc-200 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                      </div>
                   </div>
                </div>

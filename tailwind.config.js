@@ -1,12 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: {
-    files: ["./src/**/*.{js,jsx}"],
+    files: [
+      "./index.html",
+      "./src/**/*.{js,ts,jsx,tsx}",
+      "./node_modules/@quibbble/boardgame/**/*.js"
+    ],
   },
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
   safelist: [
     "font-['coquette']",
     "text-red-600",

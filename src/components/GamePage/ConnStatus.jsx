@@ -13,7 +13,7 @@ export function ConnStatus({ isConn }) {
         <div className={`flex items-center ${isConn ? "cursor-pointer" : ""}`}>
             {
                 !hide ? <div className="px-1">
-                            { isConn ? "connected" : "reconnecting"}
+                            { isConn ? "connected" : "connecting"}
                         </div> : null
             }
             <div onClick={() => {

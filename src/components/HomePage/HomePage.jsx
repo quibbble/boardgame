@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Adjectives, Nouns, NumToText } from "../../util/words";
 import { useNavigate } from "react-router-dom";
 import { CreateGame, Health } from "../../api/API";
-import { IoMdInformationCircleOutline } from "react-icons/io"
 import { Footer } from "../Footer"
 
 export function HomePage({ config }) {
@@ -11,8 +10,7 @@ export function HomePage({ config }) {
 
     const [gameID, setGameID] = useState(`${ Adjectives[Math.floor(Math.random()*Adjectives.length)] }-${ Nouns[Math.floor(Math.random()*Nouns.length)] }`);
     const [teams, setTeams] = useState(config.minTeams);
-    const [variant, setVariant] = useState(Object.keys(config.variants).length > 0 ? Object.keys(config.variants)[0] : null)
-    const [showVariantPopop, setShowVariantPopup] = useState(false)
+    const [variant, setVariant] = useState(config.variants.length > 0 ? config.variants[0] : null)
 
     useEffect(() => {
         async function fetchHealth() {
@@ -30,20 +28,6 @@ export function HomePage({ config }) {
     return (
         <div>
             <div className="flex flex-col items-center m-8 md:m-12">
-                {
-                    showVariantPopop ? 
-                        <div className="absolute w-full h-full top-0 bg-zinc-500 bg-opacity-50 flex items-center justify-center fade-in">
-                            <div className="px-4 py-4 bg-zinc-800 mx-2">
-                                <p className="font-bold text-center mb-1"><span className={`text-3xl font-black font-['${ config.font }'] text-${ config.color } mr-1`}>{ config.key }</span> variants</p>
-                                
-                                {
-                                    Object.keys(config.variants).map(variant => <p key={ variant } className="text-sm"><span className="font-bold">{ variant }:</span> { config.variants[variant] }</p>)
-                                }
-                                
-                                <button className="w-full bg-red-500 mt-2" onClick={() => setShowVariantPopup(false)}>close</button>
-                            </div>
-                        </div> : <></>
-                }
                 <div className="w-full max-w-2xl">
                     <div className="flex flex-col items-center fade-in">
                         <div className={` text-5xl font-black font-['${ config.font }'] text-${ config.color } mb-1 cursor-pointer`}>
@@ -53,21 +37,25 @@ export function HomePage({ config }) {
                             Play { config.minTeams === config.maxTeams ? `${ NumToText[config.minTeams] }` : `${ NumToText[config.minTeams] } to ${ NumToText[config.maxTeams] }`} player { config.key } online against friends.
                             To create a game or join an existing one, enter a game ID and click 'Go'.
                         </div>
-                        <form className="w-full flex mb-2" onSubmit={ handleGo }>
+                        <form className="w-full flex mb-3" onSubmit={ handleGo }>
                             <input className="w-10/12 p-2 text-zinc-100 bg-zinc-800 rounded-none border border-zinc-100 text-3xl font-medium box-border focus:outline-dashed outline-blue-500 outline-2" autoFocus type="text" value={ gameID } onChange={ e => setGameID(e.target.value) }/>
                             <button className="w-2/12 font-bold grow-0 bg-blue-500">Go</button>
                         </form>
                         <div className="flex w-full justify-between flex-wrap">
-                            <div className="italic text-xs bg-blue-500 py-1 px-2 order-2 md:order-1">
-                                <a href="https://quibbble.com">more <span className="font-['lobster'] text-sm not-italic">quibbble</span> games</a>
+                            <div className="flex order-2 md:order-1">
+                                <button onClick={ () => navigate("/rules") } title="how to play" className="mr-3 md:mr-2 p-2 first-line:p-2 bg-blue-500 italic text-xs font-bold">
+                                    game rules
+                                </button>
+                                <div className="italic text-xs  py-1 px-2 border-blue-500 border border-dashed text-blue-500">
+                                    <a href="https://quibbble.com" target="_blank">more <span className="text-zinc-200 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
+                                </div>
                             </div>
-                            <div className="flex items-center order-1 md:order-2 mb-2 md:mb-0">
+                            <div className="flex items-center order-1 md:order-2 mb-3 md:mb-0">
                                 {
                                     variant ? <>
-                                        <IoMdInformationCircleOutline className="mr-1 text-xl cursor-pointer" onClick={() => setShowVariantPopup(true)}/>
                                         <div className="mr-1 font-black text-blue-500">VARIANT</div>
                                         <select className="mr-1 bg-zinc-800 text-xs h-6 border font-bold border-zinc-100 focus:outline-none" id="players" onChange={ e => setVariant(e.target.value.replace(/\s/g, "")) }>
-                                            { Object.keys(config.variants).map(el => <option key={ el } value={ el }>{ el }</option>) }
+                                            { config.variants.map(el => <option key={ el } value={ el }>{ el }</option>) }
                                         </select>
                                     </> : null
                                 }

@@ -1,10 +1,11 @@
-import React, { useState, useRef, createRef } from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useRef, createRef, useEffect } from "react";
+import ReactDOM from 'react-dom/client'
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import '../src/tailwind.css'
-import { DownPage } from "./components/DownPage/DownPage";
-import { GamePage } from "./components/GamePage/GamePage";
-import { HomePage } from "./components/HomePage/HomePage";
+import '../tailwind.css'
+import { DownPage } from "../components/DownPage/DownPage";
+import { GamePage } from "../components/GamePage/GamePage";
+import { HomePage } from "../components/HomePage/HomePage";
+import { RulesPage } from "../components/RulesPage/RulesPage";
 
 const config = {
   // server attributes
@@ -13,11 +14,7 @@ const config = {
 
   // game attributes
   key: "Tsuro",
-  variants: {
-    "Classic": "standard Tsuro.",
-    "Longest Path": "player with the longest path wins.",
-    "Most Crossings": "player whose path crosses itself the most wins."
-  },
+  variants: ["Classic", "Longest Path", "Most Crossings"],
   minTeams: 2,
   maxTeams: 8,
 
@@ -39,6 +36,16 @@ function App() {
   const [connected, setConnected] = useState();
   const [error, setError] = useState();
 
+  const [rules, setRules] = useState("");
+
+  useEffect(() => {
+    import("./rules.md").then(res => {
+      fetch(res.default)
+      .then(response => response.text())
+      .then(text => setRules(text))
+    })
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
@@ -56,10 +63,11 @@ function App() {
           }
         />
         <Route exact path="/status/down" element={ <DownPage config={ config } /> }/>
+        <Route exact path="/rules" element={ <RulesPage config={ config } rules={ rules } /> }/>
         <Route path="/" element={ <HomePage config={ config } /> } />
       </Routes>
     </BrowserRouter>
   );
 }
 
-ReactDOM.render(<App/>, document.getElementById("root"));
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)
