@@ -28,6 +28,7 @@ export const GamePage = forwardRef((props, ref) => {
    }, [network, connected, gameID])
 
    useEffect(() => {
+      let wasConnected = false
       const connect = async (retries) => {
          if (retries <= 0) {
             navigate("/")
@@ -36,8 +37,9 @@ export const GamePage = forwardRef((props, ref) => {
 
          let snapshot = await GetSnapshot(config.host, config.key, gameID);
          if (!snapshot) {
+            if (wasConnected) sessionStorage.setItem("gameID", gameID)
             navigate(`/status/down`);
-            return 
+            return
          }
          if (snapshot.status !== 200) {
             navigate("/")
@@ -47,6 +49,7 @@ export const GamePage = forwardRef((props, ref) => {
          ws.current = new WebSocket(`${ config.websocket }/game/join?GameKey=${ config.key }&GameID=${ gameID }`);
          ws.current.onopen = () => {
             setIsConn(true)
+            wasConnected = true
             let team = localStorage.getItem(gameID)
             if (team) setTeam(team)
          };
@@ -71,7 +74,7 @@ export const GamePage = forwardRef((props, ref) => {
       }
       let retries = 3
       connect(retries)
-   }, [ws, gameID, history]);
+   }, [ws, gameID, navigate]);
 
    // websocket messages
    const setTeam = (team) => {

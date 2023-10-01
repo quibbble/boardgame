@@ -10,7 +10,11 @@ export function DownPage({ config }) {
     useEffect(() => {
         const checkHealth = async () => {
             let response = await Health(config.host);
-            if (response && response.status === 200) navigate(`/`);
+            if (response && response.status === 200) {
+                let gameID = sessionStorage.getItem("gameID")
+                if (gameID) navigate(`/${ gameID }`);
+                else navigate("/");
+            }
         }
         checkHealth();
 
