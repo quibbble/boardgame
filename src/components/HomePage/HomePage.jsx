@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Adjectives, Nouns, NumToText } from "../../util/words";
+import { Adjectives } from "../../util/adjectives";
+import { Nouns } from "../../util/nouns";
+import { NumToText } from "../../util/util";
 import { useNavigate } from "react-router-dom";
 import { CreateGame, Health } from "../../api/API";
 import { Footer } from "../Footer"
@@ -8,7 +10,7 @@ export function HomePage({ config }) {
 
     const navigate = useNavigate();
 
-    const [gameID, setGameID] = useState(`${ Adjectives[Math.floor(Math.random()*Adjectives.length)] }-${ Nouns[Math.floor(Math.random()*Nouns.length)] }`);
+    const [gameID, setGameID] = useState(`${ Adjectives[Math.floor(Math.random()*Adjectives.length)] }-${ Nouns[Math.floor(Math.random()*Nouns.length)] }-${ Math.floor(Math.random() * (99 - 0 + 1) + 0) }`);
     const [teams, setTeams] = useState(config.minTeams);
     const [variant, setVariant] = useState(config.variants.length > 0 ? config.variants[0] : null)
 
@@ -47,7 +49,7 @@ export function HomePage({ config }) {
                                     game rules
                                 </button>
                                 <div className="italic text-xs  py-1 px-2 border-blue-500 border border-dashed text-blue-500">
-                                    <a href="https://quibbble.com" target="_blank">more <span className="text-zinc-200 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
+                                    <a href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                                 </div>
                             </div>
                             <div className="flex items-center order-1 md:order-2 mb-3 md:mb-0">

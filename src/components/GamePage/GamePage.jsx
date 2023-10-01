@@ -1,6 +1,7 @@
 import React, { useEffect, forwardRef, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoMdRefresh } from "react-icons/io";
+import { IoArrowUndoSharp } from "react-icons/io5"
 import { useParams, useNavigate } from "react-router-dom";
 import { ConnStatus } from "./ConnStatus";
 import { GetSnapshot } from "../../api/API";
@@ -22,7 +23,7 @@ export const GamePage = forwardRef((props, ref) => {
 
    useEffect(() => {
       if (connected && network && connected[network.Name]) {
-         sessionStorage.setItem(gameID, connected[network.Name]);
+         localStorage.setItem(gameID, connected[network.Name]);
       }
    }, [network, connected, gameID])
 
@@ -46,7 +47,7 @@ export const GamePage = forwardRef((props, ref) => {
          ws.current = new WebSocket(`${ config.websocket }/game/join?GameKey=${ config.key }&GameID=${ gameID }`);
          ws.current.onopen = () => {
             setIsConn(true)
-            let team = sessionStorage.getItem(gameID)
+            let team = localStorage.getItem(gameID)
             if (team) setTeam(team)
          };
          ws.current.onclose = () => {
@@ -82,6 +83,12 @@ export const GamePage = forwardRef((props, ref) => {
       if (!ws.current) return;
       const variant = game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : ""
       ws.current.send(JSON.stringify({"ActionType": "Reset", "MoreDetails": {"MoreOptions": {"Seed": Date.now(), "Variant": variant }}}));
+   }
+
+   const undoAction = () => {
+      if (!ws.current) return;
+      if (game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team !== connected[network.Name]) return;
+      ws.current.send(JSON.stringify({"ActionType": "Undo"}));
    }
 
    // trigger used to force a refresh of the page
@@ -166,17 +173,19 @@ export const GamePage = forwardRef((props, ref) => {
                      </button>
                   </div>
                   <div className="flex">
-                     
-                     <button onClick={() => resetGame()} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-green-500 animate-pulse" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
+                     <button onClick={() => resetGame()} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-blue-500" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
                         <IoMdRefresh />
+                     </button>
+                     <button onClick={() => undoAction()} title="undo move" className={`p-2 ${ game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team === connected[network.Name] ? "bg-amber-500" : "bg-zinc-700 text-zinc-500 cursor-default" } mr-3 md:mr-2 rounded-full`}>
+                        <IoArrowUndoSharp />
                      </button>
                      <button onClick={() => {
                         sessionStorage.setItem("gameID", gameID);
                         navigate("/rules")
-                     }} title="how to play" className="p-2 bg-blue-500 mr-3 md:mr-2 italic text-xs font-bold">
+                     }} title="how to play" className="p-2 bg-blue-500 italic text-xs font-bold">
                         game rules
                      </button>
-                     <div className="italic text-xs  py-1 px-2 border-blue-500 border border-dashed text-blue-500">
+                     <div className="hidden md:flex italic text-xs ml-2 py-1 px-2 border-blue-500 border border-dashed text-blue-500">
                         <a href="https://quibbble.com" target="_blank">more <span className="text-zinc-200 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                      </div>
                   </div>
