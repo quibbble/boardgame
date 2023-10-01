@@ -15,12 +15,17 @@ export function HomePage({ config }) {
     const [variant, setVariant] = useState(config.variants.length > 0 ? config.variants[0] : null)
 
     useEffect(() => {
-        async function fetchHealth() {
+        const checkHealth = async () => {
             let response = await Health(config.host);
             if (!response || response.status !== 200) navigate(`/status/down`);
         }
-        fetchHealth()
-    }, [history])
+        checkHealth();
+
+        const interval = setInterval(async () => {
+            checkHealth();
+        }, 10000);
+        return () => clearInterval(interval);
+    }, [navigate]);
 
     async function handleGo(e) {
         e.preventDefault();

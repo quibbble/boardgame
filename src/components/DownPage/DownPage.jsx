@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Footer } from "../Footer"
 import { Health } from "../../api/API";
@@ -7,13 +7,18 @@ export function DownPage({ config }) {
 
     const navigate = useNavigate();
 
-    setInterval(function () {
-        async function fetchHealth() {
+    useEffect(() => {
+        const checkHealth = async () => {
             let response = await Health(config.host);
             if (response && response.status === 200) navigate(`/`);
         }
-        fetchHealth()
-    }, 5000);
+        checkHealth();
+
+        const interval = setInterval(async () => {
+            checkHealth();
+        }, 10000);
+        return () => clearInterval(interval);
+    }, [navigate]);
 
     return (
         <div className="flex flex-col items-center my-8 md:my-12">

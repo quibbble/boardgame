@@ -659,7 +659,6 @@ export const Adjectives = [
     "proof",
     "prosy",
     "proud",
-    "pubic",
     "pudgy",
     "puff",
     "puffy",

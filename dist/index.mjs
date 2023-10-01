@@ -1,4 +1,4 @@
-import Re, { useState as ft, useEffect as yt, forwardRef as da, useRef as ma } from "react";
+import Re, { useEffect as ft, useState as pt, forwardRef as da, useRef as ma } from "react";
 import { useNavigate as un, useParams as ga } from "react-router-dom";
 function Nt(e) {
   return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
@@ -282,7 +282,7 @@ function ba() {
       } finally {
         ne = !1, M.current = ye, te(), Error.prepareStackTrace = ce;
       }
-      var mt = b ? b.displayName || b.name : "", Kr = mt ? G(mt) : "";
+      var gt = b ? b.displayName || b.name : "", Kr = gt ? G(gt) : "";
       return typeof b == "function" && X.set(b, Kr), Kr;
     }
     function Pe(b, O, L) {
@@ -322,7 +322,7 @@ function ba() {
       return "";
     }
     var Ne = Object.prototype.hasOwnProperty, tt = {}, Ct = w.ReactDebugCurrentFrame;
-    function ht(b) {
+    function dt(b) {
       if (b) {
         var O = b._owner, L = Ie(b.type, b._source, O ? O.type : null);
         Ct.setExtraStackFrame(L);
@@ -344,7 +344,7 @@ function ba() {
             } catch (Ee) {
               ie = Ee;
             }
-            ie && !(ie instanceof Error) && (ht(ce), A("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", Q || "React class", L, le, typeof ie), ht(null)), ie instanceof Error && !(ie.message in tt) && (tt[ie.message] = !0, ht(ce), A("Failed %s type: %s", L, ie.message), ht(null));
+            ie && !(ie instanceof Error) && (dt(ce), A("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", Q || "React class", L, le, typeof ie), dt(null)), ie instanceof Error && !(ie.message in tt) && (tt[ie.message] = !0, dt(ce), A("Failed %s type: %s", L, ie.message), dt(null));
           }
       }
     }
@@ -471,7 +471,7 @@ function ba() {
       }
     }
     var De = w.ReactCurrentOwner, Hr = w.ReactDebugCurrentFrame;
-    function dt(b) {
+    function mt(b) {
       if (b) {
         var O = b._owner, L = Ie(b.type, b._source, O ? O.type : null);
         Hr.setExtraStackFrame(L);
@@ -529,7 +529,7 @@ Check the top-level render call using <` + L + ">.");
           return;
         Wr[L] = !0;
         var Q = "";
-        b && b._owner && b._owner !== De.current && (Q = " It was passed a child from " + K(b._owner.type) + "."), dt(b), A('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', L, Q), dt(null);
+        b && b._owner && b._owner !== De.current && (Q = " It was passed a child from " + K(b._owner.type) + "."), mt(b), A('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', L, Q), mt(null);
       }
     }
     function Gr(b, O) {
@@ -581,11 +581,11 @@ Check the top-level render call using <` + L + ">.");
         for (var O = Object.keys(b.props), L = 0; L < O.length; L++) {
           var Q = O[L];
           if (Q !== "children" && Q !== "key") {
-            dt(b), A("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", Q), dt(null);
+            mt(b), A("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", Q), mt(null);
             break;
           }
         }
-        b.ref !== null && (dt(b), A("Invalid attribute `ref` supplied to `React.Fragment`."), dt(null));
+        b.ref !== null && (mt(b), A("Invalid attribute `ref` supplied to `React.Fragment`."), mt(null));
       }
     }
     function Jr(b, O, L, Q, ce, ye) {
@@ -607,8 +607,8 @@ Check the top-level render call using <` + L + ">.");
           if (Me !== void 0)
             if (Q)
               if (Tt(Me)) {
-                for (var mt = 0; mt < Me.length; mt++)
-                  Gr(Me[mt], b);
+                for (var gt = 0; gt < Me.length; gt++)
+                  Gr(Me[gt], b);
                 Object.freeze && Object.freeze(Me);
               } else
                 A("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
@@ -2097,13 +2097,17 @@ const Is = async (e, n, t, r, i) => {
 };
 function cg({ config: e }) {
   const n = un();
-  return setInterval(function() {
-    async function t() {
-      let r = await qo(e.host);
-      r && r.status === 200 && n("/");
-    }
+  return ft(() => {
+    const t = async () => {
+      let i = await qo(e.host);
+      i && i.status === 200 && n("/");
+    };
     t();
-  }, 5e3), /* @__PURE__ */ P.jsxs("div", { className: "flex flex-col items-center my-8 md:my-12", children: [
+    const r = setInterval(async () => {
+      t();
+    }, 1e4);
+    return () => clearInterval(r);
+  }, [n]), /* @__PURE__ */ P.jsxs("div", { className: "flex flex-col items-center my-8 md:my-12", children: [
     /* @__PURE__ */ P.jsxs("div", { className: "w-full flex flex-col items-center mt-48", children: [
       /* @__PURE__ */ P.jsx("p", { className: "font-black text-4xl italic", children: "We'll be right back!" }),
       /* @__PURE__ */ P.jsxs("p", { className: "mb-1 font-thin", children: [
@@ -2775,7 +2779,6 @@ const ui = [
   "proof",
   "prosy",
   "proud",
-  "pubic",
   "pudgy",
   "puff",
   "puffy",
@@ -5995,14 +5998,18 @@ const ui = [
   9: "nine"
 };
 function fg({ config: e }) {
-  const n = un(), [t, r] = ft(`${ui[Math.floor(Math.random() * ui.length)]}-${ci[Math.floor(Math.random() * ci.length)]}-${Math.floor(Math.random() * (99 - 0 + 1) + 0)}`), [i, o] = ft(e.minTeams), [l, a] = ft(e.variants.length > 0 ? e.variants[0] : null);
-  yt(() => {
-    async function u() {
-      let c = await qo(e.host);
-      (!c || c.status !== 200) && n("/status/down");
-    }
+  const n = un(), [t, r] = pt(`${ui[Math.floor(Math.random() * ui.length)]}-${ci[Math.floor(Math.random() * ci.length)]}-${Math.floor(Math.random() * (99 - 0 + 1) + 0)}`), [i, o] = pt(e.minTeams), [l, a] = pt(e.variants.length > 0 ? e.variants[0] : null);
+  ft(() => {
+    const u = async () => {
+      let f = await qo(e.host);
+      (!f || f.status !== 200) && n("/status/down");
+    };
     u();
-  }, [history]);
+    const c = setInterval(async () => {
+      u();
+    }, 1e4);
+    return () => clearInterval(c);
+  }, [n]);
   async function s(u) {
     u.preventDefault();
     let c = await Is(e.host, e.key, t, i, l);
@@ -6115,8 +6122,8 @@ function Ms(e) {
   return Sr({ tag: "svg", attr: { viewBox: "0 0 512 512" }, child: [{ tag: "path", attr: { d: "M464 440l-28.12-32.11c-22.48-25.65-43.33-45.45-72.08-58.7-26.61-12.26-60-18.65-104.27-19.84V432L48 252 259.53 72v103.21c72.88 3 127.18 27.08 161.56 71.75C449.56 284 464 335.19 464 399.26z" } }] })(e);
 }
 function $s({ isConn: e }) {
-  const [n, t] = ft(0);
-  return yt(() => {
+  const [n, t] = pt(0);
+  return ft(() => {
     e ? setTimeout(() => t((r) => r - 1), 1500) : t(0);
   }, [e, t]), /* @__PURE__ */ P.jsxs("div", { className: `flex items-center ${e ? "cursor-pointer" : ""}`, children: [
     n ? null : /* @__PURE__ */ P.jsx("div", { className: "px-1", children: e ? "connected" : "connecting" }),
@@ -6140,10 +6147,10 @@ const pg = da((e, n) => {
     error: m,
     setError: p,
     children: d
-  } = e, { gameID: g } = ga(), k = un(), [w, A] = ft(!0);
-  yt(() => {
+  } = e, { gameID: g } = ga(), k = un(), [w, A] = pt(!0);
+  ft(() => {
     c && l && c[l.Name] && localStorage.setItem(g, c[l.Name]);
-  }, [l, c, g]), yt(() => {
+  }, [l, c, g]), ft(() => {
     const v = async (z) => {
       if (z <= 0) {
         k("/");
@@ -6184,13 +6191,13 @@ const pg = da((e, n) => {
     r.current.send(JSON.stringify({ ActionType: "Reset", MoreDetails: { MoreOptions: { Seed: Date.now(), Variant: v } } }));
   }, E = () => {
     r.current && (i && c && l && i.Actions && i.Actions.length > 0 && i.Actions[i.Actions.length - 1].Team !== c[l.Name] || r.current.send(JSON.stringify({ ActionType: "Undo" })));
-  }, [x, N] = ft(!0);
-  yt(() => {
+  }, [x, N] = pt(!0);
+  ft(() => {
     const v = () => N(!x);
     return window.addEventListener("resize", v), (D) => window.removeEventListener("resize", v);
   });
-  const [q, Z] = ft(0);
-  return yt(() => {
+  const [q, Z] = pt(0);
+  return ft(() => {
     q > 0 && setTimeout(() => Z(q - 1), 1e3);
   }, [q]), /* @__PURE__ */ P.jsx("div", { className: "min-h-screen flex flex-col items-center p-2 md:p-4 fade-in", children: /* @__PURE__ */ P.jsxs("div", { ref: n, className: `h-full w-full ${t.gamePageMaxWidth} flex flex-col items-center grow`, children: [
     /* @__PURE__ */ P.jsxs("div", { className: "flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm", children: [
@@ -9258,7 +9265,7 @@ function ff(e) {
       htmlFlowData: D,
       htmlText: a(Ct, s),
       htmlTextData: D,
-      image: a(ht),
+      image: a(dt),
       label: s,
       link: a(Ht),
       listItem: a(Tt),
@@ -9685,7 +9692,7 @@ function ff(e) {
       value: ""
     };
   }
-  function ht() {
+  function dt() {
     return {
       type: "image",
       title: null,
@@ -11271,8 +11278,8 @@ qe.prototype.commaOrSpaceSeparated = !1;
 qe.prototype.mustUseProperty = !1;
 qe.prototype.defined = !1;
 let gp = 0;
-const re = pt(), Ce = pt(), wl = pt(), R = pt(), be = pt(), kt = pt(), ze = pt();
-function pt() {
+const re = ht(), Ce = ht(), wl = ht(), R = ht(), be = ht(), kt = ht(), ze = ht();
+function ht() {
   return 2 ** ++gp;
 }
 const cr = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
@@ -15257,15 +15264,15 @@ function Xm(e, n) {
 }
 function Qt(e, n, t, r, i, o) {
   const l = r === 1 ? "tableHeader" : r === 2 ? "tableDelimiter" : "tableData", a = "tableContent";
-  t[0] !== 0 && (o.end = Object.assign({}, gt(n.events, t[0])), e.add(t[0], 0, [["exit", o, n]]));
-  const s = gt(n.events, t[1]);
+  t[0] !== 0 && (o.end = Object.assign({}, yt(n.events, t[0])), e.add(t[0], 0, [["exit", o, n]]));
+  const s = yt(n.events, t[1]);
   if (o = {
     type: l,
     start: Object.assign({}, s),
     // Note: correct end is set later.
     end: Object.assign({}, s)
   }, e.add(t[1], 0, [["enter", o, n]]), t[2] !== 0) {
-    const u = gt(n.events, t[2]), c = gt(n.events, t[3]), f = {
+    const u = yt(n.events, t[2]), c = yt(n.events, t[3]), f = {
       type: a,
       start: Object.assign({}, u),
       end: Object.assign({}, c)
@@ -15279,13 +15286,13 @@ function Qt(e, n, t, r, i, o) {
     }
     e.add(t[3] + 1, 0, [["exit", f, n]]);
   }
-  return i !== void 0 && (o.end = Object.assign({}, gt(n.events, i)), e.add(i, 0, [["exit", o, n]]), o = void 0), o;
+  return i !== void 0 && (o.end = Object.assign({}, yt(n.events, i)), e.add(i, 0, [["exit", o, n]]), o = void 0), o;
 }
 function vo(e, n, t, r, i) {
-  const o = [], l = gt(n.events, t);
+  const o = [], l = yt(n.events, t);
   i && (i.end = Object.assign({}, l), o.push(["exit", i, n])), r.end = Object.assign({}, l), o.push(["exit", r, n]), e.add(t + 1, 0, o);
 }
-function gt(e, n) {
+function yt(e, n) {
   const t = e[n], r = t[0] === "enter" ? "start" : "end";
   return t[1][r];
 }
