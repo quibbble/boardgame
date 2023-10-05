@@ -53,9 +53,7 @@ export function HomePage({ config }) {
                                 <button onClick={ () => navigate("/rules") } title="how to play" className="mr-3 md:mr-2 p-2 first-line:p-2 bg-blue-500 italic text-xs font-bold">
                                     game rules
                                 </button>
-                                <div className="italic text-xs  py-1 px-2 border-blue-500 border border-dashed text-blue-500">
-                                    <a href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
-                                </div>
+                                <a className="italic text-xs py-1 px-2 border-blue-500 border border-dashed text-blue-500" href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                             </div>
                             <div className="flex items-center order-1 md:order-2 mb-3 md:mb-0">
                                 {

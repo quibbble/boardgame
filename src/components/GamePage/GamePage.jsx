@@ -1,7 +1,8 @@
-import React, { useEffect, forwardRef, useState } from "react";
+import React, { useEffect, forwardRef, useState, useCallback } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoMdRefresh } from "react-icons/io";
 import { IoArrowUndoSharp } from "react-icons/io5"
+import { ImLink } from "react-icons/im"
 import { useParams, useNavigate } from "react-router-dom";
 import { ConnStatus } from "./ConnStatus";
 import { GetSnapshot } from "../../api/API";
@@ -13,19 +14,57 @@ export const GamePage = forwardRef((props, ref) => {
       chat, setChat, 
       connected, setConnected, 
       error, setError, 
+      debug,
       children} = props;
+
+   
+   // debugging
+   if (debug) {
+      if (game) console.log("game: ", game)
+      if (network) console.log("network: ", network)
+      if (chat) console.log("chat: ", chat) 
+      if (connected) console.log("connected: ", connected)
+      if (error) console.log("error: ", error)
+   }
 
    const { gameID } = useParams();
    const navigate = useNavigate();
 
-   // websocket connectivity logic 
-   const [isConn, setIsConn] = useState(true);
+   // websocket messages
+   const sendSetTeamAction = useCallback((team) => {
+      if (!ws.current) return;
+      ws.current.send(JSON.stringify({"ActionType": "SetTeam", "MoreDetails": {"Team": team}}));
+   })
+
+   const sendSetOpenTeamAction = useCallback(() => {
+      if (!ws.current) return;
+      ws.current.send(JSON.stringify({"ActionType": "SetOpenTeam"}));
+   })
+
+   const sendResetGameAction = useCallback(() => {
+      if (!ws.current) return;
+      const variant = game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : ""
+      ws.current.send(JSON.stringify({"ActionType": "Reset", "MoreDetails": {"MoreOptions": {"Seed": Date.now(), "Variant": variant }}}));
+   })
+
+   const sendUndoAction = useCallback(() => {
+      if (!ws.current) return;
+      if (game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team !== connected[network.Name]) return;
+      ws.current.send(JSON.stringify({"ActionType": "Undo"}));
+   })
+
+   // store logic
+   const [team, setTeam] = useState()
+   useEffect(() => {
+      if (connected && network && connected[network.Name]) setTeam(connected[network.Name])
+   }, [connected, network, setTeam])
 
    useEffect(() => {
-      if (connected && network && connected[network.Name]) {
-         localStorage.setItem(gameID, connected[network.Name]);
-      }
-   }, [network, connected, gameID])
+      if (team) localStorage.setItem(gameID, team);
+   }, [team, gameID])
+
+   // websocket connectivity logic 
+   const [isConn, setIsConn] = useState(true);
 
    useEffect(() => {
       let wasConnected = false
@@ -46,12 +85,13 @@ export const GamePage = forwardRef((props, ref) => {
             return
          }
 
-         ws.current = new WebSocket(`${ config.websocket }/game/join?GameKey=${ config.key }&GameID=${ gameID }`);
+         ws.current = new WebSocket(`${ config.websocket }/game/join?GameKey=${ config.key }&GameID=${ gameID.toLowerCase() }`);
          ws.current.onopen = () => {
             setIsConn(true)
             wasConnected = true
             let team = localStorage.getItem(gameID)
-            if (team) setTeam(team)
+            if (team) sendSetTeamAction(team)
+            // else sendSetOpenTeamAction() // TODO enable in the future?
          };
          ws.current.onclose = () => {
             setIsConn(false)
@@ -76,24 +116,6 @@ export const GamePage = forwardRef((props, ref) => {
       connect(retries)
    }, [ws, gameID, navigate]);
 
-   // websocket messages
-   const setTeam = (team) => {
-      if (!ws.current) return;
-      ws.current.send(JSON.stringify({"ActionType": "SetTeam", "MoreDetails": {"Team": team}}));
-   }
-
-   const resetGame = () => {
-      if (!ws.current) return;
-      const variant = game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : ""
-      ws.current.send(JSON.stringify({"ActionType": "Reset", "MoreDetails": {"MoreOptions": {"Seed": Date.now(), "Variant": variant }}}));
-   }
-
-   const undoAction = () => {
-      if (!ws.current) return;
-      if (game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team !== connected[network.Name]) return;
-      ws.current.send(JSON.stringify({"ActionType": "Undo"}));
-   }
-
    // trigger used to force a refresh of the page
    const [trigger, setTrigger] = useState(true);
    useEffect(() => {
@@ -108,21 +130,47 @@ export const GamePage = forwardRef((props, ref) => {
       if (copied > 0) setTimeout(() => setCopied(copied-1), 1000);
    }, [copied]);
 
+   // reset logic
+   const [tResetWindow, setTResetWindow] = useState(false)
+   const ResetWindow = () => (
+      <div className="z-50 absolute h-[95%] w-full flex items-center justify-center fade-in">
+         <div className="bg-zinc-900 p-8 rounded-md">
+            <p className="mb-4">Are you sure you want to reset the game?</p>
+            <div className="flex justify-between">
+               <button className="px-2 py-1 bg-blue-500 text-sm font-bold" 
+                  onClick={ () => setTResetWindow(false) }>
+                     cancel
+               </button>
+               <button className="px-2 py-1 bg-red-500 text-sm font-bold" 
+                  onClick={ () => { 
+                     sendResetGameAction()
+                     setTResetWindow(false) 
+                  } }>
+                     reset game
+               </button>
+            </div>
+         </div>
+      </div>
+   )
+
    return (
       <div className="min-h-screen flex flex-col items-center p-2 md:p-4 fade-in">
-         <div ref={ref} className={`h-full w-full ${ config.gamePageMaxWidth } flex flex-col items-center grow`}>
+         { tResetWindow ? <ResetWindow /> : null }
+         <div ref={ref} className={`h-full w-full ${ config.gamePageMaxWidth ? config.gamePageMaxWidth : "max-w-xl" } flex flex-col items-center grow`}>
                <div className="flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm">
                   <div>
-                     Share this link:&nbsp;
-                     <span className="underline cursor-pointer" onClick={() => {
-                        setCopied(1);
-                        navigator.clipboard.writeText(`${ window.location.protocol }//${ window.location.host }/${ gameID }`)
-                     }}>
-                        { `${ window.location.protocol }//${ window.location.host }/${ gameID }` }
-                     </span>
+                     <div className="flex items-center cursor-pointer" onClick={() => {
+                           setCopied(1);
+                           navigator.clipboard.writeText(`${ window.location.protocol }//${ window.location.host }/${ gameID }`)
+                        }}>
+                        <ImLink className="mr-1" />
+                        <span className="underline">
+                           { `${ window.location.protocol }//${ window.location.host }/${ gameID }` }
+                        </span>
+                     </div>
                      {
                         copied > 0 ?
-                           <div className="absolute mt-2 w-full flex justify-center">
+                           <div className="absolute mt-2 w-6/12 flex justify-center">
                               <div className="absolute top-[-12px] w-6 overflow-hidden inline-block">
                                     <div className=" h-4 w-4 bg-zinc-600 rotate-45 transform origin-bottom-left" />
                               </div>
@@ -138,11 +186,11 @@ export const GamePage = forwardRef((props, ref) => {
                <div className="flex w-full justify-between items-center mb-4">
                   <div className="flex">
                      { 
-                        game ? 
+                        game && game.Teams ? 
                            game.Teams.map(el => 
                               <div key={ el } 
-                                    className={ `text-xs flex items-center justify-center font-bold cursor-pointer mr-1 w-6 h-6 rounded-full border-4 border-${ el }-500 ${ network && connected && connected[network.Name] === el  ? `bg-${ connected[network.Name] }-500` : "" }` } 
-                                    onClick={ () => setTeam(el) }>
+                                    className={ `text-xs flex items-center justify-center font-bold cursor-pointer mr-1 w-6 h-6 rounded-full border-4 border-${ el }-500 ${ team === el  ? `bg-${ team }-500 pointer-events-none` : "" }` } 
+                                    onClick={ () => sendSetTeamAction(el) }>
                                        { game && game.MoreData && game.MoreData.Points ? game.MoreData.Points[el] : "" }
                               </div>) : null 
                      }
@@ -159,12 +207,12 @@ export const GamePage = forwardRef((props, ref) => {
                   </div>
                </div>
             
-               <div className="h-full w-full flex flex-col justify-center items-center grow">
+               <div className="p-4 h-full w-full flex flex-col justify-center items-center grow">
                   {/* unique game components go here */}
                   { children }
                </div>
 
-               <hr className="w-full mb-2"/>
+               <hr className="w-full mt-4 mb-2"/>
                <div className="w-full flex justify-between items-center">
                   <div className={`leading-4 text-2xl font-black text-${ config.color } cursor-pointer`}>
                      <button onClick={ () => {
@@ -176,10 +224,10 @@ export const GamePage = forwardRef((props, ref) => {
                      </button>
                   </div>
                   <div className="flex">
-                     <button onClick={() => resetGame()} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-blue-500" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
+                     <button onClick={() => setTResetWindow(true)} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-blue-500" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
                         <IoMdRefresh />
                      </button>
-                     <button onClick={() => undoAction()} title="undo move" className={`p-2 ${ game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team === connected[network.Name] ? "bg-amber-500" : "bg-zinc-700 text-zinc-500 cursor-default" } mr-3 md:mr-2 rounded-full`}>
+                     <button onClick={() => sendUndoAction()} title="undo move" className={`p-2 ${ game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team === connected[network.Name] ? "bg-amber-500" : "bg-zinc-700 text-zinc-500 cursor-default" } mr-3 md:mr-2 rounded-full`}>
                         <IoArrowUndoSharp />
                      </button>
                      <button onClick={() => {
@@ -188,9 +236,7 @@ export const GamePage = forwardRef((props, ref) => {
                      }} title="how to play" className="p-2 bg-blue-500 italic text-xs font-bold">
                         game rules
                      </button>
-                     <div className="hidden md:flex italic text-xs ml-2 py-1 px-2 border-blue-500 border border-dashed text-blue-500">
-                        <a href="https://quibbble.com" target="_blank">more <span className="text-zinc-200 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
-                     </div>
+                     <a className="hidden md:flex italic text-xs ml-2 py-1 px-2 border-blue-500 border border-dashed text-blue-500" href="https://quibbble.com" target="_blank">more <span className="text-zinc-200 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                   </div>
                </div>
          </div>

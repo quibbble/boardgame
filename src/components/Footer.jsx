@@ -1,30 +1,27 @@
 import React from "react";
 
+const Link = ({ href, title, className }) => (
+    <a className={`${ className } text-zinc-300 hover:text-amber-500 transition ease-in-out`} href={ href } target="_blank" rel="noreferrer">
+        { title }
+    </a>
+)
+
+
 export function Footer() {
     return (
         <div className="flex flex-col items-center w-full font-light text-sm">
             <div className="flex">
-                <a href="mailto:hello@quibbble.com">
-                    <p>Contact</p>
-                </a>
+                <Link href="mailto:hello@quibbble.com" title="Contact" />
                 <p className="mx-2 md:mx-4">/</p>
-                <a href="https://www.buymeacoffee.com/quibbble" target="_blank" rel="noreferrer">
-                    <p>Support</p>
-                </a>
+                <Link href="https://www.buymeacoffee.com/quibbble" title="Support" />                
                 <p className="mx-2 md:mx-4">/</p>
-                <a href="https://discord.gg/VKvjutuhUp" target="_blank" rel="noreferrer">
-                    <p>Discord</p>
-                </a>
+                <Link href="https://discord.gg/VKvjutuhUp" title="Discord" />                
                 <p className="mx-2 md:mx-4">/</p>
-                <a href="https://status.quibbble.com" target="_blank" rel="noreferrer">
-                    <p>Status</p>
-                </a>
+                <Link href="https://github.com/quibbble" title="Github" />                
                 <p className="mx-2 md:mx-4">/</p>
-                <a href="https://github.com/quibbble" target="_blank" rel="noreferrer">
-                    <p>Code</p>
-                </a>
+                <Link href="https://status.quibbble.com" title="Status" />                
             </div>
-            <p className="mt-2 italic">Made with 🤍 by <a className="underline" href="https://chrisfregly.com" target="_blank" rel="noreferrer">Chris Fregly</a></p>
+            <p className="mt-4 text-zinc-300 flex">Made with ♥ by&nbsp;<Link className="underline" href="https://chrisfregly.com" title=" Chris Fregly" /></p>
         </div>
     )
 }
