@@ -630,7 +630,7 @@ Check the top-level render call using <` + L + ">.");
 }
 process.env.NODE_ENV === "production" ? er.exports = ka() : er.exports = wa();
 var P = er.exports;
-const yt = ({ href: e, title: n, className: t }) => /* @__PURE__ */ P.jsx("a", { className: `${t} text-zinc-300 hover:text-amber-500 transition ease-in-out`, href: e, target: "_blank", rel: "noreferrer", children: n });
+const yt = ({ href: e, title: n, className: t }) => /* @__PURE__ */ P.jsx("a", { className: `${t} text-zinc-300 hover:text-zinc-100 transition ease-in-out`, href: e, target: "_blank", rel: "noreferrer", children: n });
 function wr() {
   return /* @__PURE__ */ P.jsxs("div", { className: "flex flex-col items-center w-full font-light text-sm", children: [
     /* @__PURE__ */ P.jsxs("div", { className: "flex", children: [

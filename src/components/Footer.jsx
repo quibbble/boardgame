@@ -1,7 +1,7 @@
 import React from "react";
 
 const Link = ({ href, title, className }) => (
-    <a className={`${ className } text-zinc-300 hover:text-amber-500 transition ease-in-out`} href={ href } target="_blank" rel="noreferrer">
+    <a className={`${ className } text-zinc-300 hover:text-zinc-100 transition ease-in-out`} href={ href } target="_blank" rel="noreferrer">
         { title }
     </a>
 )
