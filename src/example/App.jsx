@@ -1,9 +1,10 @@
-import React, { useState, useRef, createRef, useEffect } from "react";
+import React, { useState, useRef, createRef, useLayoutEffect } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { DownPage } from "../components/DownPage/DownPage";
 import { GamePage } from "../components/GamePage/GamePage";
 import { HomePage } from "../components/HomePage/HomePage";
 import { RulesPage } from "../components/RulesPage/RulesPage";
+import Rules from "./rules.md"
 
 const config = {
   // server attributes
@@ -21,7 +22,7 @@ const config = {
   color: "red-600",
 
   // misc attributes - optional - uncomment to see change
-//   gamePageMaxWidth: "max-w-4xl"
+  // gamePageMaxWidth: "max-w-4xl"
 }
 
 export default function App() {
@@ -36,12 +37,10 @@ export default function App() {
 
   const [rules, setRules] = useState("");
 
-  useEffect(() => {
-    import("./rules.md").then(res => {
-      fetch(res.default)
+  useLayoutEffect(() => {
+      fetch(Rules)
       .then(response => response.text())
       .then(text => setRules(text))
-    })
   }, [])
 
   return (

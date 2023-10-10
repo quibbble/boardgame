@@ -30,91 +30,86 @@ export const GamePage = forwardRef((props, ref) => {
    const { gameID } = useParams();
    const navigate = useNavigate();
 
+   // store logic
+   const team = connected && network && connected[network.Name] ? connected[network.Name] : null
+   if (team) localStorage.setItem(gameID, team)
+
    // websocket messages
    const sendSetTeamAction = useCallback((team) => {
       if (!ws.current) return;
       ws.current.send(JSON.stringify({"ActionType": "SetTeam", "MoreDetails": {"Team": team}}));
-   })
+   }, [ws])
 
    const sendSetOpenTeamAction = useCallback(() => {
       if (!ws.current) return;
       ws.current.send(JSON.stringify({"ActionType": "SetOpenTeam"}));
-   })
+   }, [ws])
 
    const sendResetGameAction = useCallback(() => {
       if (!ws.current) return;
       const variant = game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : ""
       ws.current.send(JSON.stringify({"ActionType": "Reset", "MoreDetails": {"MoreOptions": {"Seed": Date.now(), "Variant": variant }}}));
-   })
+   }, [ws])
 
    const sendUndoAction = useCallback(() => {
       if (!ws.current) return;
       if (game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team !== connected[network.Name]) return;
       ws.current.send(JSON.stringify({"ActionType": "Undo"}));
-   })
-
-   // store logic
-   const [team, setTeam] = useState()
-   useEffect(() => {
-      if (connected && network && connected[network.Name]) setTeam(connected[network.Name])
-   }, [connected, network, setTeam])
-
-   useEffect(() => {
-      if (team) localStorage.setItem(gameID, team);
-   }, [team, gameID])
+   }, [ws])
 
    // websocket connectivity logic 
-   const [isConn, setIsConn] = useState(true);
+   const [isConn, setIsConn] = useState(false);
+
+   const connect = async (retries, wasConnected) => {
+
+      if (retries <= 0) {
+         navigate("/")
+         return
+      }
+
+      let snapshot = await GetSnapshot(config.host, config.key, gameID);
+      if (!snapshot) {
+         if (wasConnected) sessionStorage.setItem("gameID", gameID)
+         navigate(`/status/down`);
+         return
+      }
+      if (snapshot.status !== 200) {
+         navigate("/")
+         return
+      }
+
+      ws.current = new WebSocket(`${ config.websocket }/game/join?GameKey=${ config.key }&GameID=${ gameID.toLowerCase() }`);
+      ws.current.onopen = () => {
+         setIsConn(true)
+         let team = localStorage.getItem(gameID)
+         if (team) sendSetTeamAction(team)
+         // else sendSetOpenTeamAction() // TODO enable in the future?
+      };
+      ws.current.onclose = e => {
+         setIsConn(false)
+         if (e.code != 1000) {
+            setTimeout(function() {
+               connect(retries-1, true);
+            }, 1000 + ((3-retries)*500));
+         }
+      };
+      ws.current.onmessage = async e => {
+         let msg = JSON.parse(e.data);
+         if (msg.Type === "Game") setGame(msg.Payload);
+         else if (msg.Type === "Network") setNetwork(msg.Payload);
+         else if (msg.Type === "Chat") setChat(c => c.concat([msg.Payload]));
+         else if (msg.Type === "Connected") setConnected(msg.Payload);
+         else if (msg.Type === "Error") setError(msg.Payload);
+      };
+      ws.current.onerror = e => {
+         console.error('Socket encountered error: ', e.message);
+      };
+   }
 
    useEffect(() => {
-      let wasConnected = false
-      const connect = async (retries) => {
-         if (retries <= 0) {
-            navigate("/")
-            return
-         }
-
-         let snapshot = await GetSnapshot(config.host, config.key, gameID);
-         if (!snapshot) {
-            if (wasConnected) sessionStorage.setItem("gameID", gameID)
-            navigate(`/status/down`);
-            return
-         }
-         if (snapshot.status !== 200) {
-            navigate("/")
-            return
-         }
-
-         ws.current = new WebSocket(`${ config.websocket }/game/join?GameKey=${ config.key }&GameID=${ gameID.toLowerCase() }`);
-         ws.current.onopen = () => {
-            setIsConn(true)
-            wasConnected = true
-            let team = localStorage.getItem(gameID)
-            if (team) sendSetTeamAction(team)
-            // else sendSetOpenTeamAction() // TODO enable in the future?
-         };
-         ws.current.onclose = () => {
-            setIsConn(false)
-            setTimeout(function() {
-               connect(retries-1);
-            }, 1000 + ((3-retries)*500));
-         };
-         ws.current.onmessage = async e => {
-            let msg = JSON.parse(e.data);
-            if (msg.Type === "Game") setGame(msg.Payload);
-            else if (msg.Type === "Network") setNetwork(msg.Payload);
-            else if (msg.Type === "Chat") setChat(c => c.concat([msg.Payload]));
-            else if (msg.Type === "Connected") setConnected(msg.Payload);
-            else if (msg.Type === "Error") setError(msg.Payload);
-         };
-         ws.current.onerror = e => {
-            console.error('Socket encountered error: ', e.message, 'Closing socket');
-            ws.current.close();
-         };
-      }
-      let retries = 3
-      connect(retries)
-   }, [ws, gameID, navigate]);
+      connect(3, false)
+      return _ => ws.current?.close(1000)
+   }, []);
 
    // trigger used to force a refresh of the page
    const [trigger, setTrigger] = useState(true);
@@ -236,7 +231,7 @@ export const GamePage = forwardRef((props, ref) => {
                      }} title="how to play" className="p-2 bg-blue-500 italic text-xs font-bold">
                         game rules
                      </button>
-                     <a className="hidden md:flex italic text-xs ml-2 py-1 px-2 border-blue-500 border border-dashed text-blue-500" href="https://quibbble.com" target="_blank">more <span className="text-zinc-200 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
+                     <a className="hidden md:block italic text-xs ml-2 py-1 px-2 border-blue-500 border border-dashed text-blue-500" href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                   </div>
                </div>
          </div>
