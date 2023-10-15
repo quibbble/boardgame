@@ -1,7 +1,8 @@
 import React, { useEffect, forwardRef, useState, useCallback } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoMdRefresh } from "react-icons/io";
-import { IoArrowUndoSharp } from "react-icons/io5"
+import { IoArrowUndoSharp, IoBugSharp } from "react-icons/io5"
+import { PiNotebookFill } from "react-icons/pi"
 import { ImLink } from "react-icons/im"
 import { useParams, useNavigate } from "react-router-dom";
 import { ConnStatus } from "./ConnStatus";
@@ -219,23 +220,35 @@ export const GamePage = forwardRef((props, ref) => {
                   </button>
                </div>
                <div className="flex">
-                  <button onClick={() => setTResetWindow(true)} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-blue-500" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
-                     <IoMdRefresh />
-                  </button>
                   <button onClick={() => sendUndoAction()} title="undo move" className={`p-2 ${ game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team === connected[network.Name] ? "bg-amber-500" : "bg-zinc-700 text-zinc-500 cursor-default" } mr-3 md:mr-2 rounded-full`}>
                      <IoArrowUndoSharp />
                   </button>
-                  <button onClick={() => {
-                     sessionStorage.setItem("gameID", gameID);
-                     navigate("/rules")
-                  }} title="how to play" className="p-2 bg-blue-500 italic text-xs font-bold">
-                     game rules
+                  <button onClick={() => setTResetWindow(true)} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-blue-500" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
+                     <IoMdRefresh />
                   </button>
                   <button onClick={() => {
                      sessionStorage.setItem("gameID", gameID);
                      navigate("/bugs")
-                  }} title="find a bug?" className={`ml-3 md:ml-2 p-2 bg-zinc-500 italic text-xs font-bold`}>
+                  }} title="find a bug?" className={`block md:hidden p-2 bg-zinc-500 mr-3 md:mr-2 rounded-full`}>
+                     <IoBugSharp />
+                  </button>
+                  <button onClick={() => {
+                     sessionStorage.setItem("gameID", gameID);
+                     navigate("/bugs")
+                  }} title="find a bug?" className={`hidden md:block mr-3 md:mr-2 p-2 bg-zinc-500 italic text-xs font-bold`}>
                      find a bug?
+                  </button>
+                  <button onClick={() => {
+                     sessionStorage.setItem("gameID", gameID);
+                     navigate("/rules")
+                  }} title="game rules" className={`block md:hidden p-2 bg-blue-500 rounded-full`}>
+                     <PiNotebookFill />
+                  </button>
+                  <button onClick={() => {
+                     sessionStorage.setItem("gameID", gameID);
+                     navigate("/rules")
+                  }} title="game rules" className="hidden md:block p-2 bg-blue-500 italic text-xs font-bold">
+                     game rules
                   </button>
                </div>
             </div>
