@@ -152,88 +152,93 @@ export const GamePage = forwardRef((props, ref) => {
       <div className="min-h-screen flex flex-col items-center p-2 md:p-4 fade-in">
          { tResetWindow ? <ResetWindow /> : null }
          <div ref={ref} className={`h-full w-full ${ config.gamePageMaxWidth ? config.gamePageMaxWidth : "max-w-xl" } flex flex-col items-center grow`}>
-               <div className="flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm">
-                  <div>
-                     <div className="flex items-center cursor-pointer" onClick={() => {
-                           setCopied(1);
-                           navigator.clipboard.writeText(`${ window.location.protocol }//${ window.location.host }/${ gameID }`)
-                        }}>
-                        <ImLink className="mr-1" />
-                        <span className="underline">
-                           { `${ window.location.protocol }//${ window.location.host }/${ gameID }` }
-                        </span>
-                     </div>
-                     {
-                        copied > 0 ?
-                           <div className="absolute mt-2 w-6/12 flex justify-center">
-                              <div className="absolute top-[-12px] w-6 overflow-hidden inline-block">
-                                    <div className=" h-4 w-4 bg-zinc-600 rotate-45 transform origin-bottom-left" />
-                              </div>
-                              <div className="font-bold text-xs text-center bg-zinc-600 px-2 py-1">copied!</div>
-                           </div> : null
-                     }
-                  </div>
-                  <div className="px-1">
-                     <ConnStatus isConn={isConn} />
-                  </div>
-               </div>
-               <hr className="w-full mb-2"/>
-               <div className="flex w-full justify-between items-center mb-4">
-                  <div className="flex">
-                     { 
-                        game && game.Teams ? 
-                           game.Teams.map(el => 
-                              <div key={ el } 
-                                    className={ `text-xs flex items-center justify-center font-bold cursor-pointer mr-1 w-6 h-6 rounded-full border-4 border-${ el }-500 ${ team === el  ? `bg-${ team }-500 pointer-events-none` : "" }` } 
-                                    onClick={ () => sendSetTeamAction(el) }>
-                                       { game && game.MoreData && game.MoreData.Points ? game.MoreData.Points[el] : "" }
-                              </div>) : null 
-                     }
-                  </div>
-                  <div className={ `font-extrabold ${ game && connected && network && connected[network.Name] && game.Winners.length === 0 ? `text-${ game.Turn }-500` : "text-zinc-100" } ${game && network && connected && connected[network.Name] === game.Turn && game.Winners.length === 0 ? "animate-pulse" : ""}` }>
-                     { 
-                        game && connected && network && connected[network.Name] ? 
-                           game.Message : 
-                           <div className="flex items-center animate-pulse">
-                              <BsArrowLeft className="mr-1" />
-                              <div>select a team</div>
-                           </div>
-                     }
-                  </div>
-               </div>
-            
-               <div className="p-4 h-full w-full flex flex-col justify-center items-center grow">
-                  {/* unique game components go here */}
-                  { children }
-               </div>
-
-               <hr className="w-full mt-4 mb-2"/>
-               <div className="w-full flex justify-between items-center">
-                  <div className={`leading-4 text-2xl font-black text-${ config.color } cursor-pointer`}>
-                     <button onClick={ () => {
-                        sessionStorage.setItem("gameID", "")
-                        navigate("/")
+            <div className="flex justify-between items-center relative w-full mb-1 justfy-self-start font-thin text-sm">
+               <div>
+                  <div className="flex items-center cursor-pointer" onClick={() => {
+                        setCopied(1);
+                        navigator.clipboard.writeText(`${ window.location.protocol }//${ window.location.host }/${ gameID }`)
                      }}>
-                        <span className={`font-['${ config.font }']`}>{ config.key }</span>
-                        <span className="ml-1 text-[0.5rem] md:text-xs text-zinc-100">{ game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : "" }</span>
-                     </button>
+                     <ImLink className="mr-1" />
+                     <span className="underline">
+                        { `${ window.location.protocol }//${ window.location.host }/${ gameID }` }
+                     </span>
                   </div>
-                  <div className="flex">
-                     <button onClick={() => setTResetWindow(true)} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-blue-500" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
-                        <IoMdRefresh />
-                     </button>
-                     <button onClick={() => sendUndoAction()} title="undo move" className={`p-2 ${ game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team === connected[network.Name] ? "bg-amber-500" : "bg-zinc-700 text-zinc-500 cursor-default" } mr-3 md:mr-2 rounded-full`}>
-                        <IoArrowUndoSharp />
-                     </button>
-                     <button onClick={() => {
-                        sessionStorage.setItem("gameID", gameID);
-                        navigate("/rules")
-                     }} title="how to play" className="p-2 bg-blue-500 italic text-xs font-bold">
-                        game rules
-                     </button>
-                     <a className="hidden md:block italic text-xs ml-2 py-1 px-2 border-blue-500 border border-dashed text-blue-500" href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
-                  </div>
+                  {
+                     copied > 0 ?
+                        <div className="absolute mt-2 w-6/12 flex justify-center">
+                           <div className="absolute top-[-12px] w-6 overflow-hidden inline-block">
+                                 <div className=" h-4 w-4 bg-zinc-600 rotate-45 transform origin-bottom-left" />
+                           </div>
+                           <div className="font-bold text-xs text-center bg-zinc-600 px-2 py-1">copied!</div>
+                        </div> : null
+                  }
                </div>
+               <div className="px-1">
+                  <ConnStatus isConn={isConn} />
+               </div>
+            </div>
+            <hr className="w-full mb-2"/>
+            <div className="flex w-full justify-between items-center mb-4">
+               <div className="flex">
+                  { 
+                     game && game.Teams ? 
+                        game.Teams.map(el => 
+                           <div key={ el } 
+                                 className={ `text-xs flex items-center justify-center font-bold cursor-pointer mr-1 w-6 h-6 rounded-full border-4 border-${ el }-500 ${ team === el  ? `bg-${ team }-500 pointer-events-none` : "" }` } 
+                                 onClick={ () => sendSetTeamAction(el) }>
+                                    { game && game.MoreData && game.MoreData.Points ? game.MoreData.Points[el] : "" }
+                           </div>) : null 
+                  }
+               </div>
+               <div className={ `font-extrabold ${ game && connected && network && connected[network.Name] && game.Winners.length === 0 ? `text-${ game.Turn }-500` : "text-zinc-100" } ${game && network && connected && connected[network.Name] === game.Turn && game.Winners.length === 0 ? "animate-pulse" : ""}` }>
+                  { 
+                     game && connected && network && connected[network.Name] ? 
+                        game.Message : 
+                        <div className="flex items-center animate-pulse">
+                           <BsArrowLeft className="mr-1" />
+                           <div>select a team</div>
+                        </div>
+                  }
+               </div>
+            </div>
+
+            <div className="p-4 h-full w-full flex flex-col justify-center items-center grow">
+               {/* unique game components go here */}
+               { children }
+            </div>
+
+            <hr className="w-full mt-4 mb-2"/>
+            <div className="w-full flex justify-between items-center">
+               <div className={`leading-4 text-2xl font-black text-${ config.color } cursor-pointer`}>
+                  <button onClick={ () => {
+                     sessionStorage.setItem("gameID", "")
+                     navigate("/")
+                  }}>
+                     <span className={`font-['${ config.font }']`}>{ config.key }</span>
+                     <span className="ml-1 text-[0.5rem] md:text-xs text-zinc-100">{ game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : "" }</span>
+                  </button>
+               </div>
+               <div className="flex">
+                  <button onClick={() => setTResetWindow(true)} title="reset game" className={`p-2 ${ game && game.Winners.length > 0 ? "bg-blue-500" : "bg-zinc-500"} mr-3 md:mr-2 rounded-full`}>
+                     <IoMdRefresh />
+                  </button>
+                  <button onClick={() => sendUndoAction()} title="undo move" className={`p-2 ${ game && connected && network && game.Actions && game.Actions.length > 0 && game.Actions[game.Actions.length-1].Team === connected[network.Name] ? "bg-amber-500" : "bg-zinc-700 text-zinc-500 cursor-default" } mr-3 md:mr-2 rounded-full`}>
+                     <IoArrowUndoSharp />
+                  </button>
+                  <button onClick={() => {
+                     sessionStorage.setItem("gameID", gameID);
+                     navigate("/rules")
+                  }} title="how to play" className="p-2 bg-blue-500 italic text-xs font-bold">
+                     game rules
+                  </button>
+                  <button onClick={() => {
+                     sessionStorage.setItem("gameID", gameID);
+                     navigate("/bugs")
+                  }} title="find a bug?" className={`ml-3 md:ml-2 p-2 bg-zinc-500 italic text-xs font-bold`}>
+                     find a bug?
+                  </button>
+               </div>
+            </div>
          </div>
       </div>
 )})

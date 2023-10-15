@@ -4,6 +4,7 @@ import { DownPage } from "../components/DownPage/DownPage";
 import { GamePage } from "../components/GamePage/GamePage";
 import { HomePage } from "../components/HomePage/HomePage";
 import { RulesPage } from "../components/RulesPage/RulesPage";
+import { BugsPage } from "../components/BugsPage";
 import Rules from "./rules.md"
 
 const config = {
@@ -61,6 +62,7 @@ export default function App() {
         />
         <Route exact path="/status/down" element={ <DownPage config={ config } /> }/>
         <Route exact path="/rules" element={ <RulesPage config={ config } rules={ rules } /> }/>
+        <Route exact path="/bugs" element={ <BugsPage config={ config } /> }/>
         <Route path="/" element={ <HomePage config={ config } /> } />
       </Routes>
     </BrowserRouter>
