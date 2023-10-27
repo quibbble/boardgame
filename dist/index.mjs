@@ -6176,7 +6176,7 @@ const yg = ba((e, n) => {
       return;
     const q = i && i.MoreData && i.MoreData.Variant ? i.MoreData.Variant : "";
     r.current.send(JSON.stringify({ ActionType: "Reset", MoreDetails: { MoreOptions: { Seed: Date.now(), Variant: q } } }));
-  }, [r]), E = Xt(() => {
+  }, [i, r]), E = Xt(() => {
     r.current && (i && c && l && i.Actions && i.Actions.length > 0 && i.Actions[i.Actions.length - 1].Team !== c[l.Name] || r.current.send(JSON.stringify({ ActionType: "Undo" })));
   }, [r]), [w, N] = it(!1), U = async (q, oe) => {
     if (q <= 0) {

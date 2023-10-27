@@ -50,7 +50,7 @@ export const GamePage = forwardRef((props, ref) => {
       if (!ws.current) return;
       const variant = game && game.MoreData && game.MoreData.Variant ? game.MoreData.Variant : ""
       ws.current.send(JSON.stringify({"ActionType": "Reset", "MoreDetails": {"MoreOptions": {"Seed": Date.now(), "Variant": variant }}}));
-   }, [ws])
+   }, [game, ws])
 
    const sendUndoAction = useCallback(() => {
       if (!ws.current) return;
