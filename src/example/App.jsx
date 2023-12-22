@@ -26,6 +26,19 @@ const config = {
   // gamePageMaxWidth: "max-w-4xl"
 }
 
+// extra options example if more options are needed for game creation
+const extra = ["A", "B", "C"]
+function ExtraOption({ setOptions }) {
+  return (
+    <div className="flex">
+      <div className="mx-1 ml-2 font-black text-blue-500">EXTRA</div>
+      <select className="px-2 bg-zinc-800 text-xs h-6 border font-bold border-zinc-100 focus:outline-none" id="players" onChange={ e => setOptions(options => ({ ...options, ...{ Extra: e.target.value } })) }>
+          { extra.map(el => <option key={ el } value={ el }>{ el }</option>) }
+      </select>
+    </div>
+  )
+}
+
 export default function App() {
   const ref = createRef();
   const ws = useRef();
@@ -37,6 +50,12 @@ export default function App() {
   const [error, setError] = useState();
 
   const [rules, setRules] = useState("");
+
+  const [options, setOptions] = useState({
+      Seed: Date.now(),
+      Variant: config.variants.length > 0 ? config.variants[0] : null,
+      ExtraOption: extra[0],
+  })
 
   useLayoutEffect(() => {
       fetch(Rules)
@@ -56,14 +75,20 @@ export default function App() {
               chat={ chat } setChat={ setChat }
               connected={ connected } setConnected={ setConnected }
               error={ error } setError={ setError }>
-                game component(s) go here
+                <div>game component(s) go here</div>
             </GamePage>
           }
         />
         <Route exact path="/status/down" element={ <DownPage config={ config } /> }/>
         <Route exact path="/rules" element={ <RulesPage config={ config } rules={ rules } /> }/>
         <Route exact path="/bugs" element={ <BugsPage config={ config } /> }/>
-        <Route path="/" element={ <HomePage config={ config } /> } />
+        <Route path="/" element=
+          { 
+            <HomePage config={ config } options={ options } setOptions={ setOptions }>
+              <ExtraOption setOptions={ setOptions } />
+            </HomePage>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

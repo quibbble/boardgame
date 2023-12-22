@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
-export const CreateGame = async (host, gameKey, gameID, teams, variant) => {
+export const CreateGame = async (host, gameKey, gameID, teams, options) => {
     let config = {
         method: 'POST',
         url: `${ host }/game/create`,
@@ -14,10 +14,7 @@ export const CreateGame = async (host, gameKey, gameID, teams, variant) => {
             GameID: gameID.toLowerCase(),
             Teams: teams,
             TurnLength: null,
-            MoreOptions: {
-                Seed: Date.now(),
-                Variant: variant,
-            }
+            MoreOptions: options,
         })
     };
     return axios(config)
