@@ -16,10 +16,6 @@ export function HomePage(props) {
     const [teams, setTeams] = useState(config.minTeams);
 
     useEffect(() => {
-        console.log(options)
-    }, [options])
-
-    useEffect(() => {
         const checkHealth = async () => {
             let response = await Health(config.host);
             if (!response || response.status !== 200) navigate(`/status/down`);

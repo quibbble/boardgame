@@ -1,4 +1,4 @@
-import Oe, { useEffect as pt, useState as ft, forwardRef as xa, useCallback as Xt, useRef as Ao } from "react";
+import Oe, { useEffect as bt, useState as ft, forwardRef as xa, useCallback as Xt, useRef as Ao } from "react";
 import { useNavigate as $t, useParams as wa } from "react-router-dom";
 function Bt(e) {
   return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
@@ -282,7 +282,7 @@ function Ea() {
       } finally {
         re = !1, M.current = be, ne(), Error.prepareStackTrace = fe;
       }
-      var gt = k ? k.displayName || k.name : "", Zr = gt ? Y(gt) : "";
+      var mt = k ? k.displayName || k.name : "", Zr = mt ? Y(mt) : "";
       return typeof k == "function" && K.set(k, Zr), Zr;
     }
     function Pe(k, R, L) {
@@ -322,7 +322,7 @@ function Ea() {
       return "";
     }
     var Ne = Object.prototype.hasOwnProperty, tt = {}, At = x.ReactDebugCurrentFrame;
-    function dt(k) {
+    function ht(k) {
       if (k) {
         var R = k._owner, L = _e(k.type, k._source, R ? R.type : null);
         At.setExtraStackFrame(L);
@@ -344,7 +344,7 @@ function Ea() {
             } catch (Se) {
               le = Se;
             }
-            le && !(le instanceof Error) && (dt(fe), A("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", X || "React class", L, ae, typeof le), dt(null)), le instanceof Error && !(le.message in tt) && (tt[le.message] = !0, dt(fe), A("Failed %s type: %s", L, le.message), dt(null));
+            le && !(le instanceof Error) && (ht(fe), A("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", X || "React class", L, ae, typeof le), ht(null)), le instanceof Error && !(le.message in tt) && (tt[le.message] = !0, ht(fe), A("Failed %s type: %s", L, le.message), ht(null));
           }
       }
     }
@@ -471,7 +471,7 @@ function Ea() {
       }
     }
     var De = x.ReactCurrentOwner, Yr = x.ReactDebugCurrentFrame;
-    function mt(k) {
+    function dt(k) {
       if (k) {
         var R = k._owner, L = _e(k.type, k._source, R ? R.type : null);
         Yr.setExtraStackFrame(L);
@@ -529,7 +529,7 @@ Check the top-level render call using <` + L + ">.");
           return;
         Jr[L] = !0;
         var X = "";
-        k && k._owner && k._owner !== De.current && (X = " It was passed a child from " + Q(k._owner.type) + "."), mt(k), A('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', L, X), mt(null);
+        k && k._owner && k._owner !== De.current && (X = " It was passed a child from " + Q(k._owner.type) + "."), dt(k), A('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', L, X), dt(null);
       }
     }
     function Xr(k, R) {
@@ -581,11 +581,11 @@ Check the top-level render call using <` + L + ">.");
         for (var R = Object.keys(k.props), L = 0; L < R.length; L++) {
           var X = R[L];
           if (X !== "children" && X !== "key") {
-            mt(k), A("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", X), mt(null);
+            dt(k), A("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", X), dt(null);
             break;
           }
         }
-        k.ref !== null && (mt(k), A("Invalid attribute `ref` supplied to `React.Fragment`."), mt(null));
+        k.ref !== null && (dt(k), A("Invalid attribute `ref` supplied to `React.Fragment`."), dt(null));
       }
     }
     function Qr(k, R, L, X, fe, be) {
@@ -607,8 +607,8 @@ Check the top-level render call using <` + L + ">.");
           if (Me !== void 0)
             if (X)
               if (Pt(Me)) {
-                for (var gt = 0; gt < Me.length; gt++)
-                  Xr(Me[gt], k);
+                for (var mt = 0; mt < Me.length; mt++)
+                  Xr(Me[mt], k);
                 Object.freeze && Object.freeze(Me);
               } else
                 A("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
@@ -630,23 +630,23 @@ Check the top-level render call using <` + L + ">.");
 }
 process.env.NODE_ENV === "production" ? er.exports = va() : er.exports = Ea();
 var T = er.exports;
-const yt = ({ href: e, title: t, className: n }) => /* @__PURE__ */ T.jsx("a", { className: `${n} text-zinc-300 hover:text-zinc-100 transition ease-in-out`, href: e, target: "_blank", rel: "noreferrer", children: t });
+const gt = ({ href: e, title: t, className: n }) => /* @__PURE__ */ T.jsx("a", { className: `${n} text-zinc-300 hover:text-zinc-100 transition ease-in-out`, href: e, target: "_blank", rel: "noreferrer", children: t });
 function pn() {
   return /* @__PURE__ */ T.jsxs("div", { className: "flex flex-col items-center w-full font-light text-sm", children: [
     /* @__PURE__ */ T.jsxs("div", { className: "flex", children: [
-      /* @__PURE__ */ T.jsx(yt, { href: "mailto:hello@quibbble.com", title: "Contact" }),
+      /* @__PURE__ */ T.jsx(gt, { href: "mailto:hello@quibbble.com", title: "Contact" }),
       /* @__PURE__ */ T.jsx("p", { className: "mx-2 md:mx-4", children: "/" }),
-      /* @__PURE__ */ T.jsx(yt, { href: "https://www.buymeacoffee.com/quibbble", title: "Support" }),
+      /* @__PURE__ */ T.jsx(gt, { href: "https://www.buymeacoffee.com/quibbble", title: "Support" }),
       /* @__PURE__ */ T.jsx("p", { className: "mx-2 md:mx-4", children: "/" }),
-      /* @__PURE__ */ T.jsx(yt, { href: "https://discord.gg/VKvjutuhUp", title: "Discord" }),
+      /* @__PURE__ */ T.jsx(gt, { href: "https://discord.gg/VKvjutuhUp", title: "Discord" }),
       /* @__PURE__ */ T.jsx("p", { className: "mx-2 md:mx-4", children: "/" }),
-      /* @__PURE__ */ T.jsx(yt, { href: "https://github.com/quibbble", title: "Github" }),
+      /* @__PURE__ */ T.jsx(gt, { href: "https://github.com/quibbble", title: "Github" }),
       /* @__PURE__ */ T.jsx("p", { className: "mx-2 md:mx-4", children: "/" }),
-      /* @__PURE__ */ T.jsx(yt, { href: "https://status.quibbble.com", title: "Status" })
+      /* @__PURE__ */ T.jsx(gt, { href: "https://status.quibbble.com", title: "Status" })
     ] }),
     /* @__PURE__ */ T.jsxs("p", { className: "mt-4 text-zinc-300 flex", children: [
       "Made with ♥ by ",
-      /* @__PURE__ */ T.jsx(yt, { className: "underline", href: "https://chrisfregly.com", title: " Chris Fregly" })
+      /* @__PURE__ */ T.jsx(gt, { className: "underline", href: "https://chrisfregly.com", title: " Chris Fregly" })
     ] })
   ] });
 }
@@ -2114,7 +2114,7 @@ const Bs = async (e, t, n, r, i) => {
 };
 function xg({ config: e }) {
   const t = $t();
-  return pt(() => {
+  return bt(() => {
     const n = async () => {
       let i = await Jo(e.host);
       if (i && i.status === 200) {
@@ -6019,9 +6019,7 @@ const hi = [
 };
 function wg(e) {
   const { config: t, options: n, setOptions: r, children: i } = e, o = $t(), [l, a] = ft(`${hi[Math.floor(Math.random() * hi.length)]}-${di[Math.floor(Math.random() * di.length)]}-${Math.floor(Math.random() * (99 - 0 + 1) + 0)}`), [s, c] = ft(t.minTeams);
-  pt(() => {
-    console.log(n);
-  }, [n]), pt(() => {
+  bt(() => {
     const u = async () => {
       let p = await Jo(t.host);
       (!p || p.status !== 200) && o("/status/down");
@@ -6155,7 +6153,7 @@ function Ks(e) {
 }
 function Xs({ isConn: e }) {
   const [t, n] = ft(0);
-  return pt(() => {
+  return bt(() => {
     e ? setTimeout(() => n((r) => r - 1), 1500) : n(0);
   }, [e, n]), /* @__PURE__ */ T.jsxs("div", { className: `flex items-center ${e ? "cursor-pointer" : ""}`, children: [
     t ? null : /* @__PURE__ */ T.jsx("div", { className: "px-1", children: e ? "connected" : "connecting" }),
@@ -6226,17 +6224,17 @@ const vg = xa((e, t) => {
       console.error("Socket encountered error: ", ye.message);
     };
   };
-  pt(() => (U(3, !1), (q) => {
+  bt(() => (U(3, !1), (q) => {
     var oe;
     return (oe = r.current) == null ? void 0 : oe.close(1e3);
   }), []);
   const [te, v] = ft(!0);
-  pt(() => {
+  bt(() => {
     const q = () => v(!te);
     return window.addEventListener("resize", q), (oe) => window.removeEventListener("resize", q);
   });
   const [_, z] = ft(0);
-  pt(() => {
+  bt(() => {
     _ > 0 && setTimeout(() => z(_ - 1), 1e3);
   }, [_]);
   const [Q, Z] = ft(!1), G = () => /* @__PURE__ */ T.jsx("div", { className: "z-50 absolute h-[95%] w-full flex items-center justify-center fade-in", children: /* @__PURE__ */ T.jsxs("div", { className: "bg-zinc-900 p-8 rounded-md", children: [
@@ -9337,7 +9335,7 @@ function vf(e) {
       htmlFlowData: _,
       htmlText: a(At, s),
       htmlTextData: _,
-      image: a(dt),
+      image: a(ht),
       label: s,
       link: a(Yt),
       listItem: a(Pt),
@@ -9764,7 +9762,7 @@ function vf(e) {
       value: ""
     };
   }
-  function dt() {
+  function ht() {
     return {
       type: "image",
       title: null,
@@ -11350,8 +11348,8 @@ qe.prototype.commaOrSpaceSeparated = !1;
 qe.prototype.mustUseProperty = !1;
 qe.prototype.defined = !1;
 let Ap = 0;
-const ie = ht(), Te = ht(), Tl = ht(), O = ht(), ke = ht(), xt = ht(), ze = ht();
-function ht() {
+const ie = pt(), Te = pt(), Tl = pt(), O = pt(), ke = pt(), xt = pt(), ze = pt();
+function pt() {
   return 2 ** ++Ap;
 }
 const dr = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
@@ -15336,15 +15334,15 @@ function sg(e, t) {
 }
 function nn(e, t, n, r, i, o) {
   const l = r === 1 ? "tableHeader" : r === 2 ? "tableDelimiter" : "tableData", a = "tableContent";
-  n[0] !== 0 && (o.end = Object.assign({}, bt(t.events, n[0])), e.add(n[0], 0, [["exit", o, t]]));
-  const s = bt(t.events, n[1]);
+  n[0] !== 0 && (o.end = Object.assign({}, yt(t.events, n[0])), e.add(n[0], 0, [["exit", o, t]]));
+  const s = yt(t.events, n[1]);
   if (o = {
     type: l,
     start: Object.assign({}, s),
     // Note: correct end is set later.
     end: Object.assign({}, s)
   }, e.add(n[1], 0, [["enter", o, t]]), n[2] !== 0) {
-    const c = bt(t.events, n[2]), f = bt(t.events, n[3]), u = {
+    const c = yt(t.events, n[2]), f = yt(t.events, n[3]), u = {
       type: a,
       start: Object.assign({}, c),
       end: Object.assign({}, f)
@@ -15358,13 +15356,13 @@ function nn(e, t, n, r, i, o) {
     }
     e.add(n[3] + 1, 0, [["exit", u, t]]);
   }
-  return i !== void 0 && (o.end = Object.assign({}, bt(t.events, i)), e.add(i, 0, [["exit", o, t]]), o = void 0), o;
+  return i !== void 0 && (o.end = Object.assign({}, yt(t.events, i)), e.add(i, 0, [["exit", o, t]]), o = void 0), o;
 }
 function To(e, t, n, r, i) {
-  const o = [], l = bt(t.events, n);
+  const o = [], l = yt(t.events, n);
   i && (i.end = Object.assign({}, l), o.push(["exit", i, t])), r.end = Object.assign({}, l), o.push(["exit", r, t]), e.add(n + 1, 0, o);
 }
-function bt(e, t) {
+function yt(e, t) {
   const n = e[t], r = n[0] === "enter" ? "start" : "end";
   return n[1][r];
 }
