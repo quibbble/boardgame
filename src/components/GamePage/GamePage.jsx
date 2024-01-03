@@ -148,6 +148,29 @@ export const GamePage = forwardRef((props, ref) => {
       </div>
    )
 
+    
+   // handle what happens on key press
+   const handleKeyPress = useCallback((event) => {
+      if (event.key === 'n') {
+         // next Team
+         let teams = game.Teams;
+         let nextTeam = teams[(teams.indexOf(team)+1)%teams.length];
+         sendSetTeamAction(nextTeam)
+      } else if (event.key === 'c') {
+         // current team which has to play
+         sendSetTeamAction(game.Turn)
+      }
+   }, [game, team]);
+   useEffect(() => {
+      // attach the event listener
+      document.addEventListener('keydown', handleKeyPress);
+      // remove the event listener
+      return () => {
+         document.removeEventListener('keydown', handleKeyPress);
+      };
+   }, [handleKeyPress]);
+
+
    return (
       <div className="min-h-screen flex flex-col items-center p-2 md:p-4 fade-in">
          { tResetWindow ? <ResetWindow /> : null }
