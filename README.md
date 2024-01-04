@@ -2,21 +2,12 @@
 
 This is a React component library for Quibbble games. See [example.jsx](./src/example.jsx) for an example of how to use the provided components. 
 
-## Install Package
+## Install Packages
 
-Generate a personal `GITHUB_ACCESS_TOKEN` with package read permissions. Read more about it [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
-
-Add an `.npmrc` file to the root of your project with the following:
+Run:
 
 ```
-//npm.pkg.github.com/:_authToken=<GITHUB_ACCESS_TOKEN>
-@quibbble:boardgame=https://npm.pkg.github.com
-```
-
-Then run:
-
-```
-npm install quibbble/boardgame
+npm install
 ```
 
 ## Start Dev Testing Env
