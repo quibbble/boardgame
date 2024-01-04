@@ -15,7 +15,7 @@ Add an `.npmrc` file to the root of your project with the following:
 
 Then run:
 
-```
+```bash
 npm install quibbble/boardgame
 ```
 
@@ -23,9 +23,24 @@ npm install quibbble/boardgame
 
 This runs the example [example.jsx](./src/example.jsx) and allows for testing:
 
-```
+```bash
 npm run dev
 ```
+
+### Test with game e.g. carcassonne
+
+1. git clone this and [carcassonne](https://github.com/quibbble/carcassonne)
+2. in carcassonne root directory:  
+uninstall dependency, and reinstall local dependencie
+```bash
+npm uninstall @quibbble/boardgame
+npm install --save <path/to/local>/boardgame
+```
+3. when changes are made in the boardgame module you need to run
+```bash
+npm run build
+```
+before seeing changes in the browser
 
 ## Create New Release
 
