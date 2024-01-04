@@ -151,13 +151,19 @@ export const GamePage = forwardRef((props, ref) => {
     
    // handle what happens on key press
    const handleKeyPress = useCallback((event) => {
-      if (event.key === 'n') {
-         // next Team
+      // fallback config if config does not include shortcut
+      config.shortcut ||= {
+         nextTeam: 'n',
+         currentTeam: 'c',
+      }
+
+      if (event.key === config.shortcut.nextTeam) {
+         // select next Team
          let teams = game.Teams;
          let nextTeam = teams[(teams.indexOf(team)+1)%teams.length];
          sendSetTeamAction(nextTeam)
-      } else if (event.key === 'c') {
-         // current team which has to play
+      } else if (event.key === config.shortcut.currentTeam && game.Turn !== team) {
+         // select current team which has to play
          sendSetTeamAction(game.Turn)
       }
    }, [game, team]);
