@@ -155,6 +155,7 @@ export const GamePage = forwardRef((props, ref) => {
       config.shortcut ||= {
          nextTeam: 'n',
          currentTeam: 'c',
+         undo: 'u',
       }
 
       if (event.key === config.shortcut.nextTeam) {
@@ -165,6 +166,9 @@ export const GamePage = forwardRef((props, ref) => {
       } else if (event.key === config.shortcut.currentTeam && game.Turn !== team) {
          // select current team which has to play
          sendSetTeamAction(game.Turn)
+      } else if (event.key === config.shortcut.undo) {
+         // undo
+         sendUndoAction()
       }
    }, [game, team]);
    useEffect(() => {
