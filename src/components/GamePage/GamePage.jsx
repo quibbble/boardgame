@@ -148,6 +148,39 @@ export const GamePage = forwardRef((props, ref) => {
       </div>
    )
 
+    
+   // handle what happens on key press
+   const handleKeyPress = useCallback((event) => {
+      // fallback config if config does not include shortcut
+      config.shortcut ||= {
+         nextTeam: 'n',
+         currentTeam: 'c',
+         undo: 'u',
+      }
+
+      if (event.key === config.shortcut.nextTeam) {
+         // select next Team
+         let teams = game.Teams;
+         let nextTeam = teams[(teams.indexOf(team)+1)%teams.length];
+         sendSetTeamAction(nextTeam)
+      } else if (event.key === config.shortcut.currentTeam && game.Turn !== team) {
+         // select current team which has to play
+         sendSetTeamAction(game.Turn)
+      } else if (event.key === config.shortcut.undo) {
+         // undo
+         sendUndoAction()
+      }
+   }, [game, team]);
+   useEffect(() => {
+      // attach the event listener
+      document.addEventListener('keydown', handleKeyPress);
+      // remove the event listener
+      return () => {
+         document.removeEventListener('keydown', handleKeyPress);
+      };
+   }, [handleKeyPress]);
+
+
    return (
       <div className="min-h-screen flex flex-col items-center p-2 md:p-4 fade-in">
          { tResetWindow ? <ResetWindow /> : null }
