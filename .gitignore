@@ -1,4 +1,4 @@
 /node_modules
-/dist/index.html
 .DS_Store
 **/.DS_Store
+/dist
