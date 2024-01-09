@@ -56,7 +56,7 @@ export function HomePage(props) {
                                 </button>
                                 <a className="italic text-xs py-1 px-2 border-blue-500 border border-dashed text-blue-500" href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                             </div>
-                            <div className="overflow-scroll flex flex-warp items-center order-1 md:order-2 mb-3 md:mb-0">
+                            <div className="overflow-scroll no-scrollbar flex flex-warp items-center order-1 md:order-2 mb-3 md:mb-0">
                                 {
                                     options.Variant ? <>
                                         <div className="mr-1 font-black text-blue-500">VARIANT</div>

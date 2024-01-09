@@ -6058,7 +6058,7 @@ function wg(e) {
             " games"
           ] })
         ] }),
-        /* @__PURE__ */ T.jsxs("div", { className: "overflow-scroll flex flex-warp items-center order-1 md:order-2 mb-3 md:mb-0", children: [
+        /* @__PURE__ */ T.jsxs("div", { className: "overflow-scroll no-scrollbar flex flex-warp items-center order-1 md:order-2 mb-3 md:mb-0", children: [
           n.Variant ? /* @__PURE__ */ T.jsxs(T.Fragment, { children: [
             /* @__PURE__ */ T.jsx("div", { className: "mr-1 font-black text-blue-500", children: "VARIANT" }),
             /* @__PURE__ */ T.jsx("select", { className: "px-2 mr-1 bg-zinc-800 text-xs h-6 border font-bold border-zinc-100 focus:outline-none", id: "players", onChange: (u) => r((d) => ({ ...d, Variant: u.target.value.replace(/\s/g, "") })), children: t.variants.map((u) => /* @__PURE__ */ T.jsx("option", { value: u, children: u }, u)) })
