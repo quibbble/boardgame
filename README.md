@@ -2,20 +2,11 @@
 
 This is a React component library for Quibbble games. See [example.jsx](./src/example.jsx) for an example of how to use the provided components. 
 
-## Install Package
+## Install Packages
 
-Generate a personal `GITHUB_ACCESS_TOKEN` with package read permissions. Read more about it [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
+Run:
 
-Add an `.npmrc` file to the root of your project with the following:
-
-```
-//npm.pkg.github.com/:_authToken=<GITHUB_ACCESS_TOKEN>
-@quibbble:boardgame=https://npm.pkg.github.com
-```
-
-Then run:
-
-```
+```bash
 npm install quibbble/boardgame
 ```
 
@@ -23,9 +14,24 @@ npm install quibbble/boardgame
 
 This runs the example [example.jsx](./src/example.jsx) and allows for testing:
 
-```
+```bash
 npm run dev
 ```
+
+### Test with game e.g. carcassonne
+
+1. git clone this and [carcassonne](https://github.com/quibbble/carcassonne)
+2. in carcassonne root directory:  
+uninstall dependency, and reinstall local dependencie
+```bash
+npm uninstall @quibbble/boardgame
+npm install --save <path/to/local>/boardgame
+```
+3. when changes are made in the boardgame module you need to run
+```bash
+npm run build
+```
+before seeing changes in the browser
 
 ## Create New Release
 
