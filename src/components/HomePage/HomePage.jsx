@@ -5,6 +5,7 @@ import { NumToText } from "../../util/util";
 import { useNavigate } from "react-router-dom";
 import { CreateGame, Health } from "../../api/API";
 import { Footer } from "../Footer"
+import { Banner } from "../Banner";
 
 export function HomePage(props) {
 
@@ -35,32 +36,37 @@ export function HomePage(props) {
     }
     return (
         <div>
+
+            <div className="flex items-center w-full">
+                <Banner />
+            </div>
+            
             <div className="flex flex-col items-center m-8 md:m-12">
                 <div className="w-full max-w-2xl">
                     <div className="flex flex-col items-center fade-in">
                         <div className={` text-5xl font-black font-['${ config.font }'] text-${ config.color } mb-1 cursor-pointer`}>
                             <a href={ `${ window.location.protocol }//${ window.location.host }` }>{ config.key }</a>
                         </div>
-                        <div className="font-thin mb-3">
+                        <div className="mb-3 font-thin">
                             Play { config.minTeams === config.maxTeams ? `${ NumToText[config.minTeams] }` : `${ NumToText[config.minTeams] } to ${ NumToText[config.maxTeams] }`} player { config.key } online against friends.
                             To create a game or join an existing one, enter a game ID and click 'Go'.
                         </div>
-                        <form className="w-full flex mb-3" onSubmit={ handleGo }>
-                            <input className="w-10/12 p-2 text-zinc-100 bg-zinc-800 rounded-none border border-zinc-100 text-3xl font-medium box-border focus:outline-dashed outline-blue-500 outline-2" autoFocus type="text" value={ gameID } onChange={ e => setGameID(e.target.value) }/>
-                            <button className="w-2/12 font-bold grow-0 bg-blue-500">Go</button>
+                        <form className="flex w-full mb-3" onSubmit={ handleGo }>
+                            <input className="box-border w-10/12 p-2 text-3xl font-medium border rounded-none text-zinc-100 bg-zinc-800 border-zinc-100 focus:outline-dashed outline-blue-500 outline-2" autoFocus type="text" value={ gameID } onChange={ e => setGameID(e.target.value) }/>
+                            <button className="w-2/12 font-bold bg-blue-500 grow-0">Go</button>
                         </form>
-                        <div className="flex w-full justify-between flex-wrap gap-2">
+                        <div className="flex flex-wrap justify-between w-full gap-2">
                             <div className="flex order-2 md:order-1">
-                                <button onClick={ () => navigate("/rules") } title="how to play" className="mr-3 md:mr-2 p-2 first-line:p-2 bg-blue-500 italic text-xs font-bold">
+                                <button onClick={ () => navigate("/rules") } title="how to play" className="p-2 mr-3 text-xs italic font-bold bg-blue-500 md:mr-2 first-line:p-2">
                                     game rules
                                 </button>
-                                <a className="italic text-xs py-1 px-2 border-blue-500 border border-dashed text-blue-500" href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
+                                <a className="px-2 py-1 text-xs italic text-blue-500 border border-blue-500 border-dashed" href="https://quibbble.com" target="_blank">more <span className="text-zinc-100 font-['lobster'] text-sm not-italic">quibbble</span> games</a>
                             </div>
-                            <div className="overflow-scroll no-scrollbar flex flex-warp items-center order-1 md:order-2 mb-3 md:mb-0">
+                            <div className="flex items-center order-1 mb-3 overflow-scroll no-scrollbar flex-warp md:order-2 md:mb-0">
                                 {
                                     options.Variant ? <>
                                         <div className="mr-1 font-black text-blue-500">VARIANT</div>
-                                        <select className="px-2 mr-1 bg-zinc-800 text-xs h-6 border font-bold border-zinc-100 focus:outline-none" id="players" onChange={ e => setOptions(options => ({...options, ...{Variant: e.target.value.replace(/\s/g, "")}})) }>
+                                        <select className="h-6 px-2 mr-1 text-xs font-bold border bg-zinc-800 border-zinc-100 focus:outline-none" id="players" onChange={ e => setOptions(options => ({...options, ...{Variant: e.target.value.replace(/\s/g, "")}})) }>
                                             { config.variants.map(el => <option key={ el } value={ el }>{ el }</option>) }
                                         </select>
                                     </> : null
@@ -68,7 +74,7 @@ export function HomePage(props) {
                                 {
                                     config.minTeams !== config.maxTeams ? <>
                                         <div className="mx-1 font-black text-blue-500">PLAYERS</div>
-                                        <select className="px-2 bg-zinc-800 text-xs h-6 border font-bold border-zinc-100 focus:outline-none" id="players" onChange={ e => setTeams(parseInt(e.target.value)) }>
+                                        <select className="h-6 px-2 text-xs font-bold border bg-zinc-800 border-zinc-100 focus:outline-none" id="players" onChange={ e => setTeams(parseInt(e.target.value)) }>
                                             { Array(config.maxTeams - config.minTeams + 1).fill().map((_, idx) => config.minTeams + idx).map(el => <option key={ el } value={ el }>{ el }</option>) }
                                         </select>
                                     </> : null
